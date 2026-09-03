@@ -20,6 +20,10 @@ import Base from "../layouts/Base.astro";
       <button class="mark-btn secondary" type="button" id="ping">Send test ping</button>
     </div>
     <pre id="events" class="mono" style="white-space:pre-wrap;background:#063a42;color:#f3f7f8;padding:1rem;max-height:420px;overflow:auto"></pre>
+    <aside id="upsell" class="upsell" hidden>
+      <p><strong>Free bins are public and rotate after 24 hours.</strong> Pro keeps history 30 days, locks bins private, and can replay events into your local handler.</p>
+      <a class="mark-btn" href="/pricing?product=catch">Upgrade Catch Pro — $19/mo</a>
+    </aside>
   </section>
 
   <section class="prose" style="margin-top:2rem">
@@ -28,6 +32,18 @@ import Base from "../layouts/Base.astro";
     <p><a href="/docs/catch">Catch docs</a> · <a href="/compare/webhook-site">vs Webhook.site</a> · <a href="/guides/test-stripe-webhooks">Test Stripe webhooks</a></p>
   </section>
 </Base>
+
+<style>
+  .upsell {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: rgba(208, 18, 122, 0.12);
+    border: 1px solid rgba(208, 18, 122, 0.45);
+  }
+  .upsell p {
+    margin-top: 0;
+  }
+</style>
 
 <script>
   const api = window.PLINTH_API;
@@ -39,12 +55,14 @@ import Base from "../layouts/Base.astro";
   const events = document.getElementById("events");
   const poll = document.getElementById("poll");
   const ping = document.getElementById("ping");
+  const upsell = document.getElementById("upsell");
 
   async function refresh() {
     if (!binId) return;
     const res = await fetch(`${api}/v1/catch/${binId}/events`);
     const data = await res.json();
     events.textContent = JSON.stringify(data.events || [], null, 2);
+    if ((data.events || []).length > 0) upsell?.removeAttribute("hidden");
   }
 
   create?.addEventListener("click", async () => {

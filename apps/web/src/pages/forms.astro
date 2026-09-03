@@ -22,6 +22,10 @@ import Base from "../layouts/Base.astro";
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
       <button class="mark-btn" type="submit">Send test submission</button>
     </form>
+    <aside id="upsell" class="upsell" hidden>
+      <p><strong>Free forms keep submissions 24 hours and stay public by id.</strong> Pro keeps them a year, adds webhooks, and raises the monthly quota.</p>
+      <a class="mark-btn" href="/pricing?product=forms">Upgrade Forms Pro — $19/mo</a>
+    </aside>
   </section>
 
   <section class="prose" style="margin-top:2rem">
@@ -32,9 +36,21 @@ import Base from "../layouts/Base.astro";
       <li>Submissions land in Plinth. Pro adds webhooks, more quota, longer retention.</li>
     </ol>
     <p>Open-source core: <code class="inline-code">@plinth/forms</code> on npm.</p>
-    <p><a href="/docs/forms">Forms docs</a> · <a href="/compare/formspree">vs Formspree</a> · <a href="/pricing">Pricing</a></p>
+    <p><a href="/docs/forms">Forms docs</a> · <a href="/compare/formspree">vs Formspree</a> · <a href="/pricing?product=forms">Pricing</a></p>
   </section>
 </Base>
+
+<style>
+  .upsell {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: rgba(208, 18, 122, 0.12);
+    border: 1px solid rgba(208, 18, 122, 0.45);
+  }
+  .upsell p {
+    margin-top: 0;
+  }
+</style>
 
 <script>
   const api = window.PLINTH_API;
@@ -43,6 +59,7 @@ import Base from "../layouts/Base.astro";
   const snippet = document.getElementById("snippet");
   const status = document.getElementById("status");
   const tester = document.getElementById("tester");
+  const upsell = document.getElementById("upsell");
 
   create?.addEventListener("click", async () => {
     status.textContent = "Minting…";
@@ -62,5 +79,6 @@ import Base from "../layouts/Base.astro";
 </form>`;
     tester.setAttribute("action", data.action);
     status.innerHTML = `<span class="status-ok">Form ready</span>`;
+    upsell?.removeAttribute("hidden");
   });
 </script>

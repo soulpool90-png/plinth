@@ -12,6 +12,6 @@
     "model": "",
     "agentOptions": { "skipInstall": false },
     "memoryEnabled": true,
-    "gitConfig": { "repo": "REPLACE_USER/plinth", "branch": "main" }
+    "gitConfig": { "repo": "soulpool90-png/plinth", "branch": "main" }
   }
 }

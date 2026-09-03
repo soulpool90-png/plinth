@@ -40,6 +40,13 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || "https://api.plinthrun.com";
     <script is:inline define:vars={{ apiUrl }}>
       window.PLINTH_API = apiUrl;
     </script>
+    {import.meta.env.PUBLIC_CF_BEACON && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: import.meta.env.PUBLIC_CF_BEACON })}
+      />
+    )}
   </head>
   <body>
     <!--

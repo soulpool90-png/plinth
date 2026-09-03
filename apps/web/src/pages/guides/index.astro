@@ -1,0 +1,62 @@
+---
+import Base from "../../layouts/Base.astro";
+import { GUIDES } from "./_guides";
+
+const categories = ["Forms", "Catch", "Schema", "Platform"] as const;
+const byCategory = categories.map((cat) => ({
+  name: cat,
+  guides: GUIDES.filter((g) => g.category === cat),
+}));
+---
+
+<Base
+  title="Guides — Plinth"
+  description="Practical guides for static site forms, webhook testing, and LLM JSON repair on Plinth."
+  path="/guides"
+>
+  <div class="land-band" style="display:inline-block">Chart notes · Guides</div>
+  <h1>Guides</h1>
+  <p class="lede">
+    Plot sheets for solo builders — contact forms without a server, webhook capture and replay, and JSON repair for agent pipelines.
+  </p>
+
+  {byCategory.map(({ name, guides }) => (
+    <section class="prose" style="margin-top:2rem">
+      <h2>{name}</h2>
+      <ul class="guide-index">
+        {guides.map((g) => (
+          <li>
+            <a href={`/guides/${g.slug}`}><strong>{g.title}</strong></a>
+            <p>{g.description}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <section class="prose" style="margin-top:2.5rem">
+    <p>
+      <a href="/docs">All docs</a> · <a href="/forms">Forms</a> · <a href="/catch">Catch</a> · <a href="/schema">Schema</a> · <a href="/pricing">Pricing</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .guide-index {
+    list-style: none;
+    padding: 0;
+  }
+  .guide-index li {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(10, 95, 107, 0.2);
+  }
+  .guide-index li:last-child {
+    border-bottom: none;
+  }
+  .guide-index p {
+    margin: 0.35rem 0 0;
+    color: rgba(243, 247, 248, 0.75);
+    font-size: 0.95rem;
+  }
+</style>

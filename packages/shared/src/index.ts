@@ -135,3 +135,7 @@ export function isProduct(value: string): value is Product {
 export function isPlan(value: string): value is Plan {
   return value === "free" || value === "pro" || value === "team";
 }
+
+export function upgradeUrl(product: Product, webBase = "https://plinthrun.com"): string {
+  return `${webBase}/pricing?product=${product}`;
+}

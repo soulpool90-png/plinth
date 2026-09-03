@@ -18,7 +18,7 @@ const schema = `{
   <div class="land-band" id="repair-title">Plotting sheet · Schema repair</div>
   <p>
     Paste broken JSON (LLM prose, trailing commas, Python literals). Repair runs in your browser via
-    <code class="inline-code">@plinth/schema</code>. No account.
+    <code class="inline-code">@plinth/schema</code>. No account. Use the API when you need quotas, saved schemas, or MCP.
   </p>
   <div class="bench">
     <label>
@@ -32,12 +32,17 @@ const schema = `{
   </div>
   <div class="row">
     <button class="mark-btn" type="button" id="run">Take a fix</button>
+    <button class="mark-btn secondary" type="button" id="run-api">Repair via API</button>
     <span id="status" class="mono" aria-live="polite"></span>
   </div>
   <label>
     Result
     <textarea id="out" rows="8" readonly></textarea>
   </label>
+  <aside id="upsell" class="upsell" hidden>
+    <p><strong>Browser repair is unlimited.</strong> The hosted API is free up to 100 calls/day. Pro unlocks 10k/day and saved schemas for agent pipelines.</p>
+    <a class="mark-btn" href="/pricing?product=schema">Upgrade Schema Pro — $19/mo</a>
+  </aside>
 </section>
 
 <style>
@@ -51,6 +56,16 @@ const schema = `{
       grid-template-columns: 1fr 1fr;
     }
   }
+  .upsell {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: rgba(208, 18, 122, 0.12);
+    border: 1px solid rgba(208, 18, 122, 0.45);
+  }
+  .upsell p {
+    margin-top: 0;
+    color: var(--ink);
+  }
 </style>
 
 <script>
@@ -61,17 +76,23 @@ const schema = `{
     const out = document.getElementById("out");
     const status = document.getElementById("status");
     const run = document.getElementById("run");
+    const runApi = document.getElementById("run-api");
+    const upsell = document.getElementById("upsell");
     if (!(raw instanceof HTMLTextAreaElement) || !(schemaEl instanceof HTMLTextAreaElement) || !(out instanceof HTMLTextAreaElement) || !status || !run) return;
 
-    run.addEventListener("click", () => {
-      let schema;
+    function parseSchema() {
       try {
-        schema = schemaEl.value.trim() ? JSON.parse(schemaEl.value) : null;
+        return schemaEl.value.trim() ? JSON.parse(schemaEl.value) : null;
       } catch (err) {
         status.innerHTML = `<span class="status-bad">Schema parse error</span>`;
         out.value = err instanceof Error ? err.message : String(err);
-        return;
+        return undefined;
       }
+    }
+
+    run.addEventListener("click", () => {
+      const schema = parseSchema();
+      if (schema === undefined) return;
       const result = schema ? repairAndValidate(raw.value, schema) : repairJson(raw.value);
       status.innerHTML = result.ok
         ? schema
@@ -81,6 +102,30 @@ const schema = `{
           : `<span class="status-ok">Repaired</span>`
         : `<span class="status-bad">Could not repair</span>`;
       out.value = JSON.stringify(result, null, 2);
+      upsell?.removeAttribute("hidden");
+    });
+
+    runApi?.addEventListener("click", async () => {
+      const schema = parseSchema();
+      if (schema === undefined) return;
+      status.textContent = "Calling API…";
+      const endpoint = schema ? "/v1/schema/repair-and-validate" : "/v1/schema/repair";
+      const body = schema ? { text: raw.value, schema } : { text: raw.value };
+      const res = await fetch(`${window.PLINTH_API}${endpoint}`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        status.innerHTML = `<span class="status-bad">${data.error || "API error"}</span>`;
+        out.value = JSON.stringify(data, null, 2);
+        upsell?.removeAttribute("hidden");
+        return;
+      }
+      status.innerHTML = `<span class="status-ok">API remaining today: ${data.remaining ?? "?"}</span>`;
+      out.value = JSON.stringify(data, null, 2);
+      upsell?.removeAttribute("hidden");
     });
   }
   boot();

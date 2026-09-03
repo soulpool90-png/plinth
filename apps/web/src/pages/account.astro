@@ -2,12 +2,16 @@
 import Base from "../layouts/Base.astro";
 ---
 
-<Base title="Plinth account" description="View entitlements for your API key." path="/account">
+<Base title="Plinth account" description="View entitlements and open the Polar customer portal." path="/account">
   <div class="land-band" style="display:inline-block">Logbook</div>
   <h1>Account</h1>
   <section class="plot-window stack" style="margin-top:2rem">
     <label>API key <input id="key" type="password" autocomplete="off" /></label>
-    <button class="mark-btn" type="button" id="load">Load entitlements</button>
+    <div class="row">
+      <button class="mark-btn" type="button" id="load">Load entitlements</button>
+      <button class="mark-btn secondary" type="button" id="portal">Manage billing (Polar)</button>
+    </div>
+    <p id="status" class="mono" aria-live="polite"></p>
     <pre id="out" class="mono" style="white-space:pre-wrap;background:#063a42;color:#f3f7f8;padding:1rem"></pre>
   </section>
 </Base>
@@ -17,11 +21,30 @@ import Base from "../layouts/Base.astro";
   const key = document.getElementById("key");
   const out = document.getElementById("out");
   const load = document.getElementById("load");
+  const portal = document.getElementById("portal");
+  const status = document.getElementById("status");
   if (key instanceof HTMLInputElement) key.value = localStorage.getItem("plinth_api_key") || "";
+
   load?.addEventListener("click", async () => {
     if (!(key instanceof HTMLInputElement) || !out) return;
     localStorage.setItem("plinth_api_key", key.value);
     const res = await fetch(`${api}/v1/me`, { headers: { "x-plinth-key": key.value } });
     out.textContent = JSON.stringify(await res.json(), null, 2);
+  });
+
+  portal?.addEventListener("click", async () => {
+    if (!(key instanceof HTMLInputElement) || !status) return;
+    localStorage.setItem("plinth_api_key", key.value);
+    status.textContent = "Opening Polar portal…";
+    const res = await fetch(`${api}/v1/portal`, {
+      method: "POST",
+      headers: { "x-plinth-key": key.value },
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      status.innerHTML = `<span class="status-bad">${data.error || "Failed"}</span>`;
+      return;
+    }
+    window.location.href = data.url;
   });
 </script>

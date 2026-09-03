@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { parseFormBody, screenSubmission } from "@plinth/forms";
-import { LIMITS } from "@plinth/shared";
+import { LIMITS, upgradeUrl } from "@plinth/shared";
 import type { Env } from "../env.ts";
 import { resolveAuth, consumeQuota } from "../auth.ts";
 import { hashIp } from "../polar.ts";
@@ -16,7 +16,12 @@ formsRoutes.post("/v1/forms", async (c) => {
     .bind(auth.userId)
     .first<{ n: number }>();
   if ((count?.n ?? 0) >= limits.resources) {
-    return json({ error: "Form limit reached for your plan", plan: auth.plan, limit: limits.resources }, 402);
+    return json({
+      error: "Form limit reached for your plan",
+      plan: auth.plan,
+      limit: limits.resources,
+      upgrade_url: upgradeUrl("forms", c.env.PUBLIC_WEB_URL),
+    }, 402);
   }
   const body = (await c.req.json().catch(() => ({}))) as {
     name?: string;
@@ -110,10 +115,22 @@ formsRoutes.all("/v1/forms/:formId", async (c) => {
     const plan =
       ent?.status === "active" && (ent.plan === "pro" || ent.plan === "team") ? ent.plan : "free";
     const quota = await consumeQuota(c.env, { ...quotaAuth, plan }, "forms");
-    if (!quota.ok) return json({ error: "Quota exceeded", remaining: quota.remaining }, 429);
+    if (!quota.ok) {
+      return json({
+        error: "Quota exceeded",
+        remaining: quota.remaining,
+        upgrade_url: upgradeUrl("forms", c.env.PUBLIC_WEB_URL),
+      }, 429);
+    }
   } else {
     const quota = await consumeQuota(c.env, auth, "forms");
-    if (!quota.ok) return json({ error: "Quota exceeded", remaining: quota.remaining }, 429);
+    if (!quota.ok) {
+      return json({
+        error: "Quota exceeded",
+        remaining: quota.remaining,
+        upgrade_url: upgradeUrl("forms", c.env.PUBLIC_WEB_URL),
+      }, 429);
+    }
   }
 
   const raw = await c.req.text();

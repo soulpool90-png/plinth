@@ -35,6 +35,7 @@ export async function createCheckout(
   product: Product,
   plan: Exclude<Plan, "free">,
   successUrl: string,
+  discountCode?: string,
 ): Promise<{ url: string } | { error: string; status: number }> {
   const productId = productIdFor(env, product, plan);
   if (!env.POLAR_ACCESS_TOKEN || !productId) {
@@ -43,22 +44,52 @@ export async function createCheckout(
       status: 503,
     };
   }
+  const payload: Record<string, unknown> = {
+    products: [productId],
+    success_url: successUrl,
+  };
+  if (discountCode) payload.discount_code = discountCode;
   const res = await fetch(`${POLAR_API}/checkouts/`, {
     method: "POST",
     headers: {
       authorization: `Bearer ${env.POLAR_ACCESS_TOKEN}`,
       "content-type": "application/json",
     },
-    body: JSON.stringify({
-      products: [productId],
-      success_url: successUrl,
-    }),
+    body: JSON.stringify(payload),
   });
   if (!res.ok) {
     return { error: await res.text(), status: res.status };
   }
   const data = (await res.json()) as { url: string };
   return { url: data.url };
+}
+
+export async function createCustomerPortal(
+  env: Env,
+  customerId: string,
+  returnUrl: string,
+): Promise<{ url: string } | { error: string; status: number }> {
+  if (!env.POLAR_ACCESS_TOKEN) {
+    return { error: "Billing is not configured", status: 503 };
+  }
+  const res = await fetch(`${POLAR_API}/customer-sessions/`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${env.POLAR_ACCESS_TOKEN}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      customer_id: customerId,
+      return_url: returnUrl,
+    }),
+  });
+  if (!res.ok) {
+    return { error: await res.text(), status: res.status };
+  }
+  const data = (await res.json()) as { customer_portal_url?: string; customerPortalUrl?: string };
+  const url = data.customer_portal_url || data.customerPortalUrl;
+  if (!url) return { error: "No portal URL returned", status: 502 };
+  return { url };
 }
 
 export async function fetchCheckout(env: Env, checkoutId: string): Promise<Record<string, unknown> | null> {

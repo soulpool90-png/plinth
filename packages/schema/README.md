@@ -17,4 +17,6 @@ repairAndValidate("{email: 'a@b.com'}", {
 });
 ```
 
-Hosted API: `https://api.plinth.dev/v1/schema/*` · Site: https://plinth.dev/schema
+Hosted API: `https://api.plinthrun.com/v1/schema/*` · Site: https://plinthrun.com/schema · MCP: `https://api.plinthrun.com/mcp`
+
+MIT · [GitHub](https://github.com/soulpool90-png/plinth)

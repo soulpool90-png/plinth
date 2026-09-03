@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { GUIDES } from "../guides/_guides";
 ---
 
 <Base title="Plinth docs" description="Docs for Forms, Catch, Schema, API keys, and MCP." path="/docs">
@@ -12,6 +13,7 @@ import Base from "../../layouts/Base.astro";
       <li><a href="/docs/schema">Schema</a></li>
       <li><a href="/docs/api-keys">API keys</a></li>
       <li><a href="/docs/mcp">MCP</a></li>
+      <li><a href="/guides">Guides</a> — long-form tutorials ({GUIDES.length} articles)</li>
     </ul>
     <p>Base API URL: <code class="inline-code">https://api.plinthrun.com</code></p>
   </div>

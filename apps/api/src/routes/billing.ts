@@ -1,10 +1,11 @@
 import { Hono } from "hono";
-import { isPlan, isProduct, type Plan, type Product } from "@plinth/shared";
+import { isPlan, isProduct, upgradeUrl, type Plan, type Product } from "@plinth/shared";
 import type { Env } from "../env.ts";
 import {
   applySubscriptionGrant,
   claimToken,
   createCheckout,
+  createCustomerPortal,
   fetchCheckout,
   revokeProduct,
   verifyPolarSignature,
@@ -16,12 +17,32 @@ import { json } from "../util.ts";
 export const billingRoutes = new Hono<{ Bindings: Env }>();
 
 billingRoutes.post("/v1/checkout", async (c) => {
-  const body = (await c.req.json()) as { product?: string; plan?: string };
+  const body = (await c.req.json()) as { product?: string; plan?: string; discount_code?: string };
   if (!body.product || !isProduct(body.product) || !body.plan || !isPlan(body.plan) || body.plan === "free") {
     return json({ error: "product and plan (pro|team) required" }, 400);
   }
   const successUrl = `${c.env.PUBLIC_WEB_URL}/start?checkout_id={CHECKOUT_ID}`;
-  const result = await createCheckout(c.env, body.product as Product, body.plan as Exclude<Plan, "free">, successUrl);
+  const result = await createCheckout(
+    c.env,
+    body.product as Product,
+    body.plan as Exclude<Plan, "free">,
+    successUrl,
+    body.discount_code,
+  );
+  if ("error" in result) return json({ error: result.error, upgrade_url: upgradeUrl(body.product as Product, c.env.PUBLIC_WEB_URL) }, result.status);
+  return json(result);
+});
+
+billingRoutes.post("/v1/portal", async (c) => {
+  const auth = await resolveAuth(c.env, c.req.raw, "schema");
+  if (!auth.userId) return json({ error: "API key required" }, 401);
+  const row = await c.env.DB.prepare(`SELECT polar_customer_id FROM users WHERE id = ?`)
+    .bind(auth.userId)
+    .first<{ polar_customer_id: string | null }>();
+  if (!row?.polar_customer_id) {
+    return json({ error: "No Polar customer on this account yet. Buy a plan first." }, 404);
+  }
+  const result = await createCustomerPortal(c.env, row.polar_customer_id, `${c.env.PUBLIC_WEB_URL}/account`);
   if ("error" in result) return json({ error: result.error }, result.status);
   return json(result);
 });

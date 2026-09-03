@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { snapshotFromParts } from "@plinth/catch";
-import { LIMITS } from "@plinth/shared";
+import { LIMITS, upgradeUrl } from "@plinth/shared";
 import type { Env } from "../env.ts";
 import { resolveAuth, consumeQuota } from "../auth.ts";
 import { id, json } from "../util.ts";
@@ -15,7 +15,12 @@ catchRoutes.post("/v1/catch/bins", async (c) => {
       .bind(auth.userId)
       .first<{ n: number }>();
     if ((count?.n ?? 0) >= limits.resources) {
-      return json({ error: "Bin limit reached", plan: auth.plan, limit: limits.resources }, 402);
+      return json({
+        error: "Bin limit reached",
+        plan: auth.plan,
+        limit: limits.resources,
+        upgrade_url: upgradeUrl("catch", c.env.PUBLIC_WEB_URL),
+      }, 402);
     }
   }
   const body = (await c.req.json().catch(() => ({}))) as { name?: string };
@@ -73,7 +78,7 @@ catchRoutes.get("/v1/catch/:binId/events", async (c) => {
 catchRoutes.post("/v1/catch/:binId/replay/:eventId", async (c) => {
   const auth = await resolveAuth(c.env, c.req.raw, "catch");
   if (!LIMITS[auth.plan].catch.replay) {
-    return json({ error: "Replay requires Pro" }, 402);
+    return json({ error: "Replay requires Pro", upgrade_url: upgradeUrl("catch", c.env.PUBLIC_WEB_URL) }, 402);
   }
   const body = (await c.req.json()) as { url: string };
   if (!body.url) return json({ error: "url required" }, 400);
@@ -118,7 +123,9 @@ catchRoutes.all("/v1/catch/:binId", async (c) => {
   }
 
   const quota = await consumeQuota(c.env, { userId: bin.user_id, keyId, plan }, "catch");
-  if (!quota.ok) return json({ error: "Quota exceeded" }, 429);
+  if (!quota.ok) {
+    return json({ error: "Quota exceeded", upgrade_url: upgradeUrl("catch", c.env.PUBLIC_WEB_URL) }, 429);
+  }
 
   const rawBody = await c.req.text();
   const headerMap: Record<string, string> = {};
