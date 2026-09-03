@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://plinth.dev",
+  site: "https://plinthrun.com",
   output: "static",
   trailingSlash: "never",
   vite: {

@@ -6,7 +6,7 @@ You are the Plinth daily operator. Repo: this plinth monorepo.
 
 1. Read `STRATEGY.md` and the last 30 lines of `ops/log.md`.
 2. If secrets allow, pull:
-   - `GET https://api.plinth.dev/health`
+   - `GET https://api.plinthrun.com/health`
    - Cloudflare analytics summary if `CLOUDFLARE_API_TOKEN` is set
    - Open support tickets via `GET /v1/support/open` with header `x-plinth-ops: $POLAR_ACCESS_TOKEN`
 3. For each open ticket: draft a factual reply; if you can close a bug with a code fix, open a PR. Mark tickets answered via `POST /v1/support/:id/close` when done.

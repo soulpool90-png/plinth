@@ -30,7 +30,7 @@ Run from the Growth automation (3×/week). Prefer PRs and commits over social po
 Plinth is an open-core Forms / Catch / Schema toolkit for solo builders on Cloudflare Workers.
 
 ## Links
-- https://plinth.dev
+- https://plinthrun.com
 - https://github.com/YOUR_USER/plinth
 - npm: @plinth/schema @plinth/forms @plinth/catch
 ```

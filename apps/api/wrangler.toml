@@ -2,15 +2,20 @@ name = "plinth-api"
 main = "src/index.ts"
 compatibility_date = "2026-09-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
 
 [vars]
-PUBLIC_WEB_URL = "https://plinth.dev"
-API_PUBLIC_URL = "https://api.plinth.dev"
+PUBLIC_WEB_URL = "https://plinthrun.com"
+API_PUBLIC_URL = "https://api.plinthrun.com"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "plinth"
-database_id = "REPLACE_AT_SETUP"
+database_id = "e82e85e2-ad15-42d2-8269-d9848c13cf63"
+
+[[routes]]
+pattern = "api.plinthrun.com"
+custom_domain = true
 
 [observability]
 enabled = true

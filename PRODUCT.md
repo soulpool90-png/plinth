@@ -53,7 +53,7 @@ Undecided until Polar exists: live product IDs, checkout URLs, webhook secret.
 ## Brand Commitments
 
 - Name: **Plinth** (the block a column stands on — infrastructure under the thing you actually ship).
-- Domain to buy: **plinth.dev**, fallbacks `useplinth.com`, `plinth.run`.
+- Domain live: **plinthrun.com** (api.plinthrun.com). `plinth.dev` was already taken.
 - Voice: precise, slightly dry, no hype, no “AI-powered” as decoration. Commands over adjectives.
 - Do not fabricate customers, logos, MRR, or testimonials.
 

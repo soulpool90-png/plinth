@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://plinth.dev/sitemap-index.xml
+Sitemap: https://plinthrun.com/sitemap-index.xml

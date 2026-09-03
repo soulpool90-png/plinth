@@ -3,15 +3,15 @@
 > Open-core infrastructure for solo builders: Forms, Catch, Schema.
 
 ## Products
-- Forms: https://plinth.dev/forms — static site form backend
-- Catch: https://plinth.dev/catch — webhook request bin
-- Schema: https://plinth.dev/schema — LLM JSON repair + JSON Schema validation
+- Forms: https://plinthrun.com/forms — static site form backend
+- Catch: https://plinthrun.com/catch — webhook request bin
+- Schema: https://plinthrun.com/schema — LLM JSON repair + JSON Schema validation
 
 ## API
-- Base: https://api.plinth.dev
-- Docs: https://plinth.dev/docs
-- MCP: https://api.plinth.dev/mcp
-- Health: https://api.plinth.dev/health
+- Base: https://api.plinthrun.com
+- Docs: https://plinthrun.com/docs
+- MCP: https://api.plinthrun.com/mcp
+- Health: https://api.plinthrun.com/health
 
 ## Packages
 - @plinth/schema
