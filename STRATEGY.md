@@ -48,4 +48,6 @@ See `ops/automations/`. All agents read this file and append to `ops/log.md`.
 
 ## Current focus
 
-Phase 0–2 scaffold complete in-repo. Next human blocker: SETUP.md accounts. After deploy: ship launches, then follow kill/double-down.
+**Live.** https://plinthrun.com · https://api.plinthrun.com · repo `soulpool90-png/plinth`.
+
+Balanced across Forms / Catch / Schema until double-down fires. Priority: first paying customer by month 3 via free-path polish + SEO + Polar checkout working.
