@@ -1,0 +1,92 @@
+---
+import Base from "../layouts/Base.astro";
+import { LIMITS, PRICES, PRODUCTS, PRODUCT_COPY } from "@plinth/shared";
+---
+
+<Base title="Plinth pricing" description="Free, Pro $19/mo, Team $49/mo per product. Polar handles tax." path="/pricing">
+  <div class="land-band" style="display:inline-block">Dead reckoning</div>
+  <h1>Pricing that stays on the free tier until revenue says otherwise</h1>
+  <p class="lede">Every product has a free quota. Pro and Team unlock memory, private bins, webhooks, and replay. Billed through Polar (merchant of record).</p>
+
+  <div class="plans">
+    <article class="plot-window">
+      <h2>Free</h2>
+      <p class="mono">$0</p>
+      <ul>
+        <li>No account required for first success</li>
+        <li>Forms: {LIMITS.free.forms.monthlyQuota}/mo · 1 form</li>
+        <li>Catch: {LIMITS.free.catch.monthlyQuota} events · 1 bin · 24h</li>
+        <li>Schema: {LIMITS.free.schema.dailyQuota}/day</li>
+      </ul>
+    </article>
+    <article class="plot-window">
+      <h2>Pro</h2>
+      <p class="mono">{PRICES.pro.label}/mo · ${PRICES.pro.annual / 100}/yr</p>
+      <ul>
+        <li>Forms: {LIMITS.pro.forms.monthlyQuota}/mo · webhooks</li>
+        <li>Catch: {LIMITS.pro.catch.resources} bins · replay · private</li>
+        <li>Schema: {LIMITS.pro.schema.dailyQuota}/day · saved schemas</li>
+      </ul>
+      <div class="row">
+        {PRODUCTS.map((p) => (
+          <button class="mark-btn" type="button" data-product={p} data-plan="pro">Buy {PRODUCT_COPY[p].name} Pro</button>
+        ))}
+      </div>
+    </article>
+    <article class="plot-window">
+      <h2>Team</h2>
+      <p class="mono">{PRICES.team.label}/mo · ${PRICES.team.annual / 100}/yr</p>
+      <ul>
+        <li>Higher quotas across the board</li>
+        <li>90-day Catch retention</li>
+        <li>Same Polar checkout, same API keys</li>
+      </ul>
+      <div class="row">
+        {PRODUCTS.map((p) => (
+          <button class="mark-btn secondary" type="button" data-product={p} data-plan="team">Buy {PRODUCT_COPY[p].name} Team</button>
+        ))}
+      </div>
+    </article>
+  </div>
+  <p id="billing-status" class="mono" aria-live="polite" style="margin-top:1rem"></p>
+  <p class="prose">Checkout opens on Polar. After payment you land on <a href="/start">/start</a> to claim your API key. No tax filings on your side.</p>
+</Base>
+
+<style>
+  .plans {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 960px) {
+    .plans {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  ul {
+    padding-left: 1.1rem;
+  }
+</style>
+
+<script>
+  const api = window.PLINTH_API;
+  const status = document.getElementById("billing-status");
+  document.querySelectorAll("[data-product]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const product = btn.getAttribute("data-product");
+      const plan = btn.getAttribute("data-plan");
+      status.textContent = "Opening Polar checkout…";
+      const res = await fetch(`${api}/v1/checkout`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ product, plan }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        status.innerHTML = `<span class="status-bad">${data.error || "Billing not configured yet"}</span> — finish SETUP.md first.`;
+        return;
+      }
+      window.location.href = data.url;
+    });
+  });
+</script>

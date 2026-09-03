@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Plinth account" description="View entitlements for your API key." path="/account">
+  <div class="land-band" style="display:inline-block">Logbook</div>
+  <h1>Account</h1>
+  <section class="plot-window stack" style="margin-top:2rem">
+    <label>API key <input id="key" type="password" autocomplete="off" /></label>
+    <button class="mark-btn" type="button" id="load">Load entitlements</button>
+    <pre id="out" class="mono" style="white-space:pre-wrap;background:#063a42;color:#f3f7f8;padding:1rem"></pre>
+  </section>
+</Base>
+
+<script>
+  const api = window.PLINTH_API;
+  const key = document.getElementById("key");
+  const out = document.getElementById("out");
+  const load = document.getElementById("load");
+  if (key instanceof HTMLInputElement) key.value = localStorage.getItem("plinth_api_key") || "";
+  load?.addEventListener("click", async () => {
+    if (!(key instanceof HTMLInputElement) || !out) return;
+    localStorage.setItem("plinth_api_key", key.value);
+    const res = await fetch(`${api}/v1/me`, { headers: { "x-plinth-key": key.value } });
+    out.textContent = JSON.stringify(await res.json(), null, 2);
+  });
+</script>

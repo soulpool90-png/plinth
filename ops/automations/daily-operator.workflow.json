@@ -1,0 +1,17 @@
+{
+  "name": "Plinth Daily Operator",
+  "description": "Daily metrics, support queue, bugfixes, ops log.",
+  "workflow": {
+    "triggers": [{ "cron": { "cron": "0 14 * * *" } }],
+    "actions": [],
+    "prompts": [
+      {
+        "prompt": "Follow ops/automations/daily-operator.md in this repository exactly. Read STRATEGY.md and ops/log.md first. Prefer small safe commits or PRs. Do not invent revenue. Do not spend money."
+      }
+    ],
+    "model": "",
+    "agentOptions": { "skipInstall": false },
+    "memoryEnabled": true,
+    "gitConfig": { "repo": "REPLACE_USER/plinth", "branch": "main" }
+  }
+}

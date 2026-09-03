@@ -1,0 +1,17 @@
+{
+  "name": "Plinth Weekly Strategist",
+  "description": "Monday KPI review and 5-line founder email.",
+  "workflow": {
+    "triggers": [{ "cron": { "cron": "0 15 * * 1" } }],
+    "actions": [],
+    "prompts": [
+      {
+        "prompt": "Follow ops/automations/weekly-strategist.md. Produce a 5-line report for REPORT_EMAIL. Append to ops/log.md. Optional human tasks must be ≤10 minutes each."
+      }
+    ],
+    "model": "",
+    "agentOptions": { "skipInstall": false },
+    "memoryEnabled": true,
+    "gitConfig": { "repo": "REPLACE_USER/plinth", "branch": "main" }
+  }
+}

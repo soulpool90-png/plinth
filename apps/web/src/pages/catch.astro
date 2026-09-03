@@ -1,0 +1,84 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Plinth Catch — webhook inbox" description="Create a URL that records every HTTP request. Inspect headers and body. Replay on Pro." path="/catch">
+  <div class="land-band" style="display:inline-block">Bearing · Catch</div>
+  <h1>Catch every request. Read it like a chart.</h1>
+  <p class="lede">Mint a bin URL. Point Stripe, GitHub, Resend, or your own service at it. Inspect the payload. Replay outbound on Pro.</p>
+
+  <section class="plot-window stack" style="margin-top:2rem">
+    <div class="land-band">New bin</div>
+    <div class="row">
+      <button class="mark-btn" type="button" id="create">Create catch URL</button>
+      <span id="status" class="mono" aria-live="polite"></span>
+    </div>
+    <label>Catch URL<textarea id="url" rows="2" readonly></textarea></label>
+    <label>Inspect URL<textarea id="inspect" rows="2" readonly></textarea></label>
+    <div class="row">
+      <button class="mark-btn secondary" type="button" id="poll">Refresh events</button>
+      <button class="mark-btn secondary" type="button" id="ping">Send test ping</button>
+    </div>
+    <pre id="events" class="mono" style="white-space:pre-wrap;background:#063a42;color:#f3f7f8;padding:1rem;max-height:420px;overflow:auto"></pre>
+  </section>
+
+  <section class="prose" style="margin-top:2rem">
+    <h2>Why Catch</h2>
+    <p>Webhook.site proved people will pay for permanent URLs, history, and privacy. Catch is the open-core sibling: free bins for debugging, Pro for private history and replay.</p>
+    <p><a href="/docs/catch">Catch docs</a> · <a href="/compare/webhook-site">vs Webhook.site</a> · <a href="/guides/test-stripe-webhooks">Test Stripe webhooks</a></p>
+  </section>
+</Base>
+
+<script>
+  const api = window.PLINTH_API;
+  let binId = "";
+  const create = document.getElementById("create");
+  const url = document.getElementById("url");
+  const inspect = document.getElementById("inspect");
+  const status = document.getElementById("status");
+  const events = document.getElementById("events");
+  const poll = document.getElementById("poll");
+  const ping = document.getElementById("ping");
+
+  async function refresh() {
+    if (!binId) return;
+    const res = await fetch(`${api}/v1/catch/${binId}/events`);
+    const data = await res.json();
+    events.textContent = JSON.stringify(data.events || [], null, 2);
+  }
+
+  create?.addEventListener("click", async () => {
+    status.textContent = "Creating…";
+    const res = await fetch(`${api}/v1/catch/bins`, { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
+    const data = await res.json();
+    if (!res.ok) {
+      status.innerHTML = `<span class="status-bad">${data.error || "Failed"}</span>`;
+      return;
+    }
+    binId = data.id;
+    url.value = data.url;
+    inspect.value = data.inspect;
+    history.replaceState({}, "", `/catch?bin=${binId}`);
+    status.innerHTML = `<span class="status-ok">Bin live</span>`;
+    await refresh();
+  });
+
+  poll?.addEventListener("click", refresh);
+  ping?.addEventListener("click", async () => {
+    if (!binId) return;
+    await fetch(`${api}/v1/catch/${binId}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ hello: "plinth", at: new Date().toISOString() }),
+    });
+    await refresh();
+  });
+
+  const existing = new URLSearchParams(location.search).get("bin");
+  if (existing) {
+    binId = existing;
+    url.value = `${api}/v1/catch/${binId}`;
+    inspect.value = `${location.origin}/catch?bin=${binId}`;
+    refresh();
+  }
+</script>

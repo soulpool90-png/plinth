@@ -1,0 +1,19 @@
+---
+import Base from "../../layouts/Base.astro";
+---
+
+<Base title="Schema docs — Plinth" path="/docs/schema">
+  <h1>Schema</h1>
+  <div class="prose">
+    <h2>Repair</h2>
+    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/schema/repair
+{ "text": "\`\`\`json\\n{ok: True,}\\n\`\`\`" }`}</pre>
+    <h2>Validate</h2>
+    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/schema/validate
+{ "value": { "ok": true }, "schema": { "type": "object" } }`}</pre>
+    <h2>Repair and validate</h2>
+    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/schema/repair-and-validate
+{ "text": "{ok: True}", "schema": { "type": "object", "properties": { "ok": { "type": "boolean" } } } }`}</pre>
+    <p>Library: <code class="inline-code">npm i @plinth/schema</code></p>
+  </div>
+</Base>

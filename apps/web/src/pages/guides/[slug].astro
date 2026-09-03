@@ -1,0 +1,79 @@
+---
+import Base from "../../layouts/Base.astro";
+
+export function getStaticPaths() {
+  return [
+    {
+      slug: "static-site-contact-form",
+      title: "Add a contact form to a static site",
+      body: "Static hosts do not run server code. Point the form action at Plinth Forms, include a honeypot field, and optionally set a redirect URL. Works with plain HTML, Astro, Hugo, 11ty, and Jekyll.",
+    },
+    {
+      slug: "astro-contact-form",
+      title: "Astro contact form without a server",
+      body: "In an Astro page, use a plain HTML form with method POST and action set to your Plinth form URL. Keep the honeypot off-screen with CSS. No API routes required.",
+    },
+    {
+      slug: "hugo-contact-form",
+      title: "Hugo contact form with Plinth",
+      body: "Hugo sites are static. Create a Plinth form, paste the snippet into your contact partial, deploy. Spam screening happens on Plinth.",
+    },
+    {
+      slug: "11ty-contact-form",
+      title: "11ty contact form with Plinth",
+      body: "Eleventy builds HTML. Use Plinth as the form action so you do not need Netlify Forms lock-in.",
+    },
+    {
+      slug: "nextjs-contact-form",
+      title: "Next.js contact form without managing spam yourself",
+      body: "Even if you use Next.js, outsourcing the form endpoint keeps spam heuristics and storage out of your app. Point the form at Plinth or POST JSON to the same URL.",
+    },
+    {
+      slug: "test-stripe-webhooks",
+      title: "Test Stripe webhooks locally with Plinth Catch",
+      body: "Create a Catch bin, set it as the Stripe endpoint URL in test mode, trigger events, inspect payloads, then replay to localhost on Pro.",
+    },
+    {
+      slug: "test-github-webhooks",
+      title: "Test GitHub webhooks with Plinth Catch",
+      body: "Point a GitHub repository webhook at a Catch URL. Inspect delivery payloads, signatures, and event types without exposing a laptop tunnel for every test.",
+    },
+    {
+      slug: "llm-json-repair",
+      title: "Repair invalid JSON from LLMs",
+      body: "Models return markdown fences, trailing commas, single quotes, and Python True/False/None. Use @plinth/schema or POST /v1/schema/repair before parsing.",
+    },
+    {
+      slug: "structured-output-json-schema",
+      title: "Validate LLM structured output with JSON Schema",
+      body: "Constrained decoding helps syntax; it does not guarantee your required fields. Repair, then validate against a schema, then retry the model with the error list if needed.",
+    },
+    {
+      slug: "webhook-replay",
+      title: "Replay a captured webhook",
+      body: "Catch Pro can POST a stored event to another URL. Use it to replay Stripe or GitHub deliveries into a local handler after you fix a bug.",
+    },
+    {
+      slug: "open-core-form-backend",
+      title: "Open-core form backend on Cloudflare Workers",
+      body: "Plinth Forms runs on Workers + D1. The spam screener is published as @plinth/forms so you can self-host or embed the heuristics.",
+    },
+    {
+      slug: "mcp-json-repair",
+      title: "JSON repair MCP tool for agents",
+      body: "Point an MCP client at https://api.plinth.dev/mcp and call schema_repair or schema_repair_and_validate from an agent loop.",
+    },
+  ].map((g) => ({ params: { slug: g.slug }, props: g }));
+}
+
+const { title, body } = Astro.props;
+---
+
+<Base title={`${title} — Plinth`} description={body} path={`/guides/${Astro.params.slug}`}>
+  <div class="land-band" style="display:inline-block">Guide</div>
+  <h1>{title}</h1>
+  <div class="prose">
+    <p>{body}</p>
+    <p><a href="/docs">All docs</a> · <a href="/pricing">Pricing</a></p>
+  </div>
+</Base>

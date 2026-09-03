@@ -1,0 +1,30 @@
+{
+  "name": "@plinth/schema",
+  "version": "0.1.0",
+  "description": "Repair malformed JSON (especially LLM output) and validate it against JSON Schema.",
+  "type": "module",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "json",
+    "jsonrepair",
+    "json-schema",
+    "llm",
+    "structured-output"
+  ],
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

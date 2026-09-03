@@ -1,0 +1,17 @@
+{
+  "name": "Plinth Growth",
+  "description": "SEO pages, docs, npm, directories — 3x/week.",
+  "workflow": {
+    "triggers": [{ "cron": { "cron": "0 16 * * 1,3,5" } }],
+    "actions": [],
+    "prompts": [
+      {
+        "prompt": "Follow ops/automations/growth.md and ops/distribution.md. Ship exactly one growth artifact per run. Log it in ops/log.md. No paid ads. No fake testimonials."
+      }
+    ],
+    "model": "",
+    "agentOptions": { "skipInstall": false },
+    "memoryEnabled": true,
+    "gitConfig": { "repo": "REPLACE_USER/plinth", "branch": "main" }
+  }
+}

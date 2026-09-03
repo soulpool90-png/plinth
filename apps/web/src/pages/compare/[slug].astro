@@ -1,0 +1,60 @@
+---
+import Base from "../../layouts/Base.astro";
+
+export function getStaticPaths() {
+  return [
+    "formspree",
+    "basin",
+    "getform",
+    "webhook-site",
+    "hookbin",
+    "jsonrepair",
+  ].map((slug) => ({ params: { slug } }));
+}
+
+const pages: Record<string, { title: string; rival: string; body: string }> = {
+  formspree: {
+    title: "Formspree alternative — Plinth Forms",
+    rival: "Formspree",
+    body: "Formspree is a solid form backend with paid plans starting around $10–15/mo for a few hundred submissions. Plinth Forms targets the same job with an open-source screener, anonymous minting for first success, and Polar MoR billing. Free quota is intentionally usable; Pro is $19/mo with webhooks and higher limits.",
+  },
+  basin: {
+    title: "Basin alternative — Plinth Forms",
+    rival: "Basin",
+    body: "Basin is polished and can get pricey per submission at the top end. Plinth Forms is the open-core undercut: mint a URL, paste HTML, keep shipping. Choose Basin for their dashboard polish; choose Plinth for a Worker-native API and a library you can self-host.",
+  },
+  getform: {
+    title: "Getform / Forminit alternative — Plinth Forms",
+    rival: "Getform",
+    body: "Getform (Forminit) is a hosted form endpoint. Plinth Forms matches the static-site workflow and adds an open-source package for spam heuristics you can run yourself.",
+  },
+  "webhook-site": {
+    title: "Webhook.site alternative — Plinth Catch",
+    rival: "Webhook.site",
+    body: "Webhook.site proved the market: free bins expire, Basic/Pro pay for permanence, history, and privacy ($9–$27/mo). Plinth Catch is the open-core cousin on Cloudflare: create a bin, inspect events, upgrade for private history and replay.",
+  },
+  hookbin: {
+    title: "Hookbin alternative — Plinth Catch",
+    rival: "Hookbin",
+    body: "Hookbin popularized request bins. Plinth Catch keeps the same mental model and adds Pro replay plus Polar billing for solo operators who do not want to run their own store.",
+  },
+  jsonrepair: {
+    title: "Hosted jsonrepair — Plinth Schema",
+    rival: "jsonrepair (library)",
+    body: "josdejong/jsonrepair is excellent as a library. Plinth Schema packages repair + JSON Schema validation as an API, MCP tools, and a browser bench — with quotas and saved schemas on Pro for teams that do not want to operate the Worker themselves.",
+  },
+};
+
+const slug = Astro.params.slug as string;
+const page = pages[slug];
+---
+
+<Base title={page.title} description={`${page.rival} alternative for solo builders.`} path={`/compare/${slug}`}>
+  <div class="land-band" style="display:inline-block">Comparison</div>
+  <h1>{page.rival} alternative</h1>
+  <div class="prose">
+    <p>{page.body}</p>
+    <p>Verify current competitor pricing before spending. No fabricated customer quotes.</p>
+    <p><a href="/pricing">Plinth pricing</a> · <a href="/">Home</a></p>
+  </div>
+</Base>

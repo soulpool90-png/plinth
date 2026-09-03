@@ -1,0 +1,87 @@
+---
+const sample = `{name: 'Ada', roles: ['builder', 'pilot'], ok: True, note: "hi
+there",}`;
+const schema = `{
+  "type": "object",
+  "required": ["name", "ok"],
+  "properties": {
+    "name": { "type": "string" },
+    "roles": { "type": "array", "items": { "type": "string" } },
+    "ok": { "type": "boolean" },
+    "note": { "type": "string" }
+  },
+  "additionalProperties": false
+}`;
+---
+
+<section class="plot-window stack" aria-labelledby="repair-title">
+  <div class="land-band" id="repair-title">Plotting sheet · Schema repair</div>
+  <p>
+    Paste broken JSON (LLM prose, trailing commas, Python literals). Repair runs in your browser via
+    <code class="inline-code">@plinth/schema</code>. No account.
+  </p>
+  <div class="bench">
+    <label>
+      Raw fix
+      <textarea id="raw" rows="8">{sample}</textarea>
+    </label>
+    <label>
+      Schema (optional)
+      <textarea id="schema" rows="8">{schema}</textarea>
+    </label>
+  </div>
+  <div class="row">
+    <button class="mark-btn" type="button" id="run">Take a fix</button>
+    <span id="status" class="mono" aria-live="polite"></span>
+  </div>
+  <label>
+    Result
+    <textarea id="out" rows="8" readonly></textarea>
+  </label>
+</section>
+
+<style>
+  .bench {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 860px) {
+    .bench {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+
+<script>
+  async function boot() {
+    const { repairAndValidate, repairJson } = await import("@plinth/schema");
+    const raw = document.getElementById("raw");
+    const schemaEl = document.getElementById("schema");
+    const out = document.getElementById("out");
+    const status = document.getElementById("status");
+    const run = document.getElementById("run");
+    if (!(raw instanceof HTMLTextAreaElement) || !(schemaEl instanceof HTMLTextAreaElement) || !(out instanceof HTMLTextAreaElement) || !status || !run) return;
+
+    run.addEventListener("click", () => {
+      let schema;
+      try {
+        schema = schemaEl.value.trim() ? JSON.parse(schemaEl.value) : null;
+      } catch (err) {
+        status.innerHTML = `<span class="status-bad">Schema parse error</span>`;
+        out.value = err instanceof Error ? err.message : String(err);
+        return;
+      }
+      const result = schema ? repairAndValidate(raw.value, schema) : repairJson(raw.value);
+      status.innerHTML = result.ok
+        ? schema
+          ? result.valid
+            ? `<span class="status-ok">Valid fix</span>`
+            : `<span class="status-bad">Repaired, schema failed</span>`
+          : `<span class="status-ok">Repaired</span>`
+        : `<span class="status-bad">Could not repair</span>`;
+      out.value = JSON.stringify(result, null, 2);
+    });
+  }
+  boot();
+</script>

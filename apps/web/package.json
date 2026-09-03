@@ -1,0 +1,23 @@
+{
+  "name": "@plinth/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "wrangler pages deploy dist --project-name=plinth-web",
+    "typecheck": "astro check"
+  },
+  "dependencies": {
+    "@plinth/forms": "0.1.0",
+    "@plinth/schema": "0.1.0",
+    "@plinth/shared": "0.1.0",
+    "astro": "^5.13.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "wrangler": "^4.34.0"
+  }
+}

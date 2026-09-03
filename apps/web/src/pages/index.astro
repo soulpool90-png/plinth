@@ -1,0 +1,138 @@
+---
+import Base from "../layouts/Base.astro";
+import CompassRose from "../components/CompassRose.astro";
+import SchemaBench from "../components/SchemaBench.astro";
+---
+
+<Base title="Plinth — take a bearing, ship the thing" path="/">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="land-band" style="display:inline-block;margin-bottom:1rem">Nav station · open-core</div>
+      <h1>Infrastructure under the thing you actually ship</h1>
+      <p class="lede">
+        Three bearings for solo builders: a form endpoint, a webhook inbox you can read, and JSON repair
+        that survives LLM output. Free path works without an account. Paid is memory and limits.
+      </p>
+      <div class="row" style="margin-top:1.5rem">
+        <a class="mark-btn" href="#plot">Plot broken JSON</a>
+        <a class="mark-btn secondary" href="/pricing">See pricing</a>
+      </div>
+      <ul class="rhumb" aria-label="Products">
+        <li><a href="/forms"><strong>Forms</strong> — static-site POST URL</a></li>
+        <li><a href="/catch"><strong>Catch</strong> — inspectable webhook bin</a></li>
+        <li><a href="/schema"><strong>Schema</strong> — repair + validate</a></li>
+      </ul>
+    </div>
+    <div class="hero-rose" aria-hidden="true">
+      <CompassRose size={320} />
+      <svg class="rhumb-lines" viewBox="0 0 320 320" width="320" height="320">
+        <path class="rhumb-draw" d="M160 160 L60 70" fill="none" stroke="#d9a441" stroke-width="2"></path>
+        <path class="rhumb-draw" d="M160 160 L270 90" fill="none" stroke="#d9a441" stroke-width="2"></path>
+        <path class="rhumb-draw" d="M160 160 L210 260" fill="none" stroke="#d9a441" stroke-width="2"></path>
+        <text x="40" y="58" fill="#f3f7f8" font-size="12" font-family="Geologica,sans-serif">FORMS</text>
+        <text x="250" y="78" fill="#f3f7f8" font-size="12" font-family="Geologica,sans-serif">CATCH</text>
+        <text x="190" y="280" fill="#f3f7f8" font-size="12" font-family="Geologica,sans-serif">SCHEMA</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="plot" style="margin-top:3rem">
+    <SchemaBench />
+  </section>
+
+  <section style="margin-top:3rem" class="stack">
+    <h2>Three tools. One chart table.</h2>
+    <div class="tri">
+      <article class="plot-window">
+        <h3>Forms</h3>
+        <p>Point any HTML form at a Plinth URL. Honeypot + heuristics. Store or forward. Open-source screener in <code class="inline-code">@plinth/forms</code>.</p>
+        <a href="/forms">Open Forms →</a>
+      </article>
+      <article class="plot-window">
+        <h3>Catch</h3>
+        <p>Create a bin. Fire Stripe, GitHub, or your own webhook at it. Inspect headers and body. Replay on Pro.</p>
+        <a href="/catch">Open Catch →</a>
+      </article>
+      <article class="plot-window">
+        <h3>Schema</h3>
+        <p>Repair trailing commas, fences, Python literals, truncated braces — then validate against JSON Schema.</p>
+        <a href="/schema">Open Schema →</a>
+      </article>
+    </div>
+  </section>
+
+  <section style="margin-top:3rem" class="plot-window">
+    <div class="land-band">Dead reckoning · pricing</div>
+    <p>
+      Free quotas on every product. Pro is <strong>$19/mo</strong>. Team is <strong>$49/mo</strong>. Polar handles
+      tax and receipts. Annual = 10 months.
+    </p>
+    <a class="mark-btn" href="/pricing">Full chart</a>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    padding-top: 1.5rem;
+  }
+  @media (min-width: 960px) {
+    .hero {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+  .hero-rose {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 320px;
+  }
+  .rhumb-lines {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    pointer-events: none;
+  }
+  .rhumb-draw {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: draw 1.1s 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .rhumb {
+    list-style: none;
+    padding: 0;
+    margin: 1.75rem 0 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+  .rhumb a {
+    color: var(--paper);
+    text-decoration: none;
+    font-family: var(--font-display);
+    letter-spacing: 0.03em;
+    padding-left: 0;
+  }
+  .rhumb a::before {
+    content: "▸ ";
+    color: var(--magenta);
+  }
+  .rhumb a:hover {
+    color: var(--land);
+  }
+  .tri {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 860px) {
+    .tri {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

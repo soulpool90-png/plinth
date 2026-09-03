@@ -1,0 +1,44 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Claim your Plinth API key" description="Finish Polar checkout and retrieve your API key." path="/start">
+  <div class="land-band" style="display:inline-block">Landfall</div>
+  <h1>Claim your API key</h1>
+  <p class="lede">After Polar checkout, this page exchanges the checkout id for a key. Store it once — we only show the full key here.</p>
+  <section class="plot-window stack" style="margin-top:2rem">
+    <label>Checkout id <input id="checkout" /></label>
+    <button class="mark-btn" type="button" id="claim">Claim key</button>
+    <p id="status" class="mono" aria-live="polite"></p>
+    <label>API key <textarea id="key" rows="3" readonly></textarea></label>
+  </section>
+</Base>
+
+<script>
+  const api = window.PLINTH_API;
+  const params = new URLSearchParams(location.search);
+  const checkout = document.getElementById("checkout");
+  const key = document.getElementById("key");
+  const status = document.getElementById("status");
+  const claim = document.getElementById("claim");
+  if (checkout instanceof HTMLInputElement && params.get("checkout_id")) {
+    checkout.value = params.get("checkout_id") || "";
+  }
+  claim?.addEventListener("click", async () => {
+    if (!(checkout instanceof HTMLInputElement) || !(key instanceof HTMLTextAreaElement)) return;
+    status.textContent = "Claiming…";
+    const res = await fetch(`${api}/v1/claim`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ checkout_id: checkout.value }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      status.innerHTML = `<span class="status-bad">${data.error || "Failed"}</span>`;
+      return;
+    }
+    key.value = data.api_key;
+    localStorage.setItem("plinth_api_key", data.api_key);
+    status.innerHTML = `<span class="status-ok">Key issued for ${data.email}</span>`;
+  });
+</script>

@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import SchemaBench from "../components/SchemaBench.astro";
+---
+
+<Base title="Plinth Schema — repair and validate LLM JSON" description="Repair malformed JSON from LLMs, then validate against JSON Schema. Open-source core @plinth/schema." path="/schema">
+  <div class="land-band" style="display:inline-block">Bearing · Schema</div>
+  <h1>Make the model’s JSON land on the chart</h1>
+  <p class="lede">LLMs return fences, trailing commas, single quotes, Python <code class="inline-code">True</code>, and truncated braces. Schema repairs them, then proves the result against JSON Schema.</p>
+
+  <div style="margin-top:2rem">
+    <SchemaBench />
+  </div>
+
+  <section class="prose" style="margin-top:2rem">
+    <h2>API</h2>
+    <pre class="mono" style="background:#063a42;padding:1rem;overflow:auto">{`curl -X POST https://api.plinth.dev/v1/schema/repair-and-validate \\
+  -H 'content-type: application/json' \\
+  -d '{"text":"{ok: True}", "schema":{"type":"object","properties":{"ok":{"type":"boolean"}}}}'`}</pre>
+    <p>Also available as MCP tools at <code class="inline-code">/mcp</code>.</p>
+    <p><a href="/docs/schema">Schema docs</a> · <a href="/guides/llm-json-repair">LLM JSON repair guide</a> · <a href="/pricing">Pricing</a></p>
+  </section>
+</Base>

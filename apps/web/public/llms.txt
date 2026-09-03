@@ -1,0 +1,23 @@
+# Plinth
+
+> Open-core infrastructure for solo builders: Forms, Catch, Schema.
+
+## Products
+- Forms: https://plinth.dev/forms — static site form backend
+- Catch: https://plinth.dev/catch — webhook request bin
+- Schema: https://plinth.dev/schema — LLM JSON repair + JSON Schema validation
+
+## API
+- Base: https://api.plinth.dev
+- Docs: https://plinth.dev/docs
+- MCP: https://api.plinth.dev/mcp
+- Health: https://api.plinth.dev/health
+
+## Packages
+- @plinth/schema
+- @plinth/forms
+- @plinth/catch
+
+## Pricing
+- Free quotas on every product
+- Pro $19/mo · Team $49/mo (Polar merchant of record)

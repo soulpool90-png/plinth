@@ -1,0 +1,23 @@
+---
+import Base from "../../layouts/Base.astro";
+---
+
+<Base title="MCP — Plinth" path="/docs/mcp">
+  <h1>MCP</h1>
+  <div class="prose">
+    <p>JSON-RPC tools are exposed at <code class="inline-code">https://api.plinth.dev/mcp</code>.</p>
+    <ul>
+      <li><code class="inline-code">schema_repair</code></li>
+      <li><code class="inline-code">schema_repair_and_validate</code></li>
+      <li><code class="inline-code">catch_create_bin</code></li>
+    </ul>
+    <p>Example Cursor MCP entry:</p>
+    <pre class="mono" style="background:#063a42;padding:1rem">{`{
+  "mcpServers": {
+    "plinth": {
+      "url": "https://api.plinth.dev/mcp"
+    }
+  }
+}`}</pre>
+  </div>
+</Base>

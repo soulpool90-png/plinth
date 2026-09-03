@@ -1,0 +1,66 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Plinth Forms — static site form backend" description="A POST URL for any static site. Honeypot spam screens, storage, optional webhooks. Open-source screener." path="/forms">
+  <div class="land-band" style="display:inline-block">Bearing · Forms</div>
+  <h1>A form backend that fits on a static site</h1>
+  <p class="lede">Point <code class="inline-code">action</code> at a Plinth URL. We screen spam, store the payload, and optionally forward it. No server required on your side.</p>
+
+  <section class="plot-window stack" style="margin-top:2rem">
+    <div class="land-band">Create a form endpoint</div>
+    <div class="row">
+      <button class="mark-btn" type="button" id="create">Mint anonymous form</button>
+      <span id="status" class="mono" aria-live="polite"></span>
+    </div>
+    <label>Action URL<textarea id="action" rows="2" readonly></textarea></label>
+    <label>HTML snippet<textarea id="snippet" rows="10" readonly></textarea></label>
+    <form id="tester" class="stack" method="POST">
+      <label>Name <input name="name" required /></label>
+      <label>Email <input name="email" type="email" required /></label>
+      <label>Message <textarea name="message" required></textarea></label>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
+      <button class="mark-btn" type="submit">Send test submission</button>
+    </form>
+  </section>
+
+  <section class="prose" style="margin-top:2rem">
+    <h2>How it works</h2>
+    <ol>
+      <li>Create a form (anonymous above, or authenticated via API key for Pro features).</li>
+      <li>Paste the snippet into Astro, Hugo, 11ty, WordPress, or plain HTML.</li>
+      <li>Submissions land in Plinth. Pro adds webhooks, more quota, longer retention.</li>
+    </ol>
+    <p>Open-source core: <code class="inline-code">@plinth/forms</code> on npm.</p>
+    <p><a href="/docs/forms">Forms docs</a> · <a href="/compare/formspree">vs Formspree</a> · <a href="/pricing">Pricing</a></p>
+  </section>
+</Base>
+
+<script>
+  const api = window.PLINTH_API;
+  const create = document.getElementById("create");
+  const action = document.getElementById("action");
+  const snippet = document.getElementById("snippet");
+  const status = document.getElementById("status");
+  const tester = document.getElementById("tester");
+
+  create?.addEventListener("click", async () => {
+    status.textContent = "Minting…";
+    const res = await fetch(`${api}/v1/forms/anonymous`, { method: "POST" });
+    const data = await res.json();
+    if (!res.ok) {
+      status.innerHTML = `<span class="status-bad">${data.error || "Failed"}</span>`;
+      return;
+    }
+    action.value = data.action;
+    snippet.value = `<form action="${data.action}" method="POST">
+  <label>Name <input name="name" required></label>
+  <label>Email <input name="email" type="email" required></label>
+  <label>Message <textarea name="message" required></textarea></label>
+  <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+  <button type="submit">Send</button>
+</form>`;
+    tester.setAttribute("action", data.action);
+    status.innerHTML = `<span class="status-ok">Form ready</span>`;
+  });
+</script>

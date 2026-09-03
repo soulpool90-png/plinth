@@ -1,0 +1,19 @@
+---
+import Base from "../../layouts/Base.astro";
+---
+
+<Base title="Catch docs — Plinth" path="/docs/catch">
+  <h1>Catch</h1>
+  <div class="prose">
+    <h2>Create a bin</h2>
+    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/catch/bins
+{ "name": "stripe-local" }`}</pre>
+    <h2>Receive</h2>
+    <p>Any method to <code class="inline-code">/v1/catch/:binId</code> is recorded. Authorization headers are redacted.</p>
+    <h2>Inspect</h2>
+    <pre class="mono" style="background:#063a42;padding:1rem">{`GET /v1/catch/:binId/events`}</pre>
+    <h2>Replay (Pro)</h2>
+    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/catch/:binId/replay/:eventId
+{ "url": "https://localhost:3000/webhook" }`}</pre>
+  </div>
+</Base>

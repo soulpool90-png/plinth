@@ -1,0 +1,17 @@
+{
+  "name": "Plinth Monthly Portfolio",
+  "description": "Kill / double-down / concentrate review on the 1st.",
+  "workflow": {
+    "triggers": [{ "cron": { "cron": "0 15 1 * *" } }],
+    "actions": [],
+    "prompts": [
+      {
+        "prompt": "Follow ops/automations/monthly-portfolio.md and ops/concentrate.md. Update STRATEGY.md Current focus. Commit STRATEGY.md and ops/log.md."
+      }
+    ],
+    "model": "",
+    "agentOptions": { "skipInstall": false },
+    "memoryEnabled": true,
+    "gitConfig": { "repo": "REPLACE_USER/plinth", "branch": "main" }
+  }
+}

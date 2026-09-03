@@ -1,0 +1,23 @@
+{
+  "name": "plinth",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Open-core infrastructure for solo builders: forms, webhook catch, JSON schema repair.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm test --workspaces --if-present",
+    "build": "npm run build -w @plinth/web",
+    "dev:api": "npm run dev -w @plinth/api",
+    "dev:web": "npm run dev -w @plinth/web",
+    "deploy:api": "npm run deploy -w @plinth/api",
+    "deploy:web": "npm run deploy -w @plinth/web",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
