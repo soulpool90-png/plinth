@@ -1,5 +1,11 @@
 # Ops log
 
+## 2026-09-03 — night ridge redesign
+
+- Replaced cathode-orange world with brief-pinned night ridge (graphite/snow/stone/mist, ink mountain hero).
+- SchemaBench sits on the ridge in first viewport; six pricing buy buttons (Pro snow / Team stone outline).
+- DESIGN.md rewritten; landing surface brief written; deployed to plinthrun.com.
+
 ## 2026-09-03 — first revenue sprint
 
 - All 6 Polar checkouts return live URLs.
