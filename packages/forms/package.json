@@ -13,16 +13,14 @@
   "bugs": {
     "url": "https://github.com/soulpool90-png/plinth/issues"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+    ".": "./src/index.ts"
   },
   "files": [
     "dist",
+    "src",
     "README.md"
   ],
   "scripts": {
@@ -38,7 +36,15 @@
     "honeypot"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    }
   },
   "devDependencies": {
     "typescript": "^5.9.2",

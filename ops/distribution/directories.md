@@ -8,6 +8,19 @@ Ready-to-paste drafts for product directories and awesome lists.
 - GitHub: https://github.com/soulpool90-png/plinth
 - npm: `@plinth/forms`, `@plinth/catch`, `@plinth/schema`
 
+## Awesome-list PRs opened
+
+- https://github.com/agarrharr/awesome-static-website-services/pull/161
+- https://github.com/realadeel/awesome-webhooks/pull/74
+- https://github.com/zhuima/awesome-cloudflare/pull/220
+- https://github.com/burningtree/awesome-json/pull/298
+- Branch ready (open PR manually if blocked): https://github.com/soulpool90-png/awesome-llm-json/pull/new/add-plinth-listing
+- MCP: https://github.com/punkpeye/awesome-mcp-servers/pull/13536
+
+## Human paste (login required)
+
+Use sections below for AlternativeTo, SaaSHub, Indie Hackers, Product Hunt. MCP directory paste copy lives in `ops/distribution/mcp-directories.md`.
+
 ---
 
 ## AlternativeTo
