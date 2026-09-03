@@ -4,14 +4,13 @@ import { LIMITS, PRICES, PRODUCTS, PRODUCT_COPY } from "@plinth/shared";
 ---
 
 <Base title="Plinth pricing" description="Free, Pro $19/mo, Team $49/mo per product. Polar handles tax. Annual = 10 months." path="/pricing">
-  <div class="land-band" style="display:inline-block">Dead reckoning</div>
-  <h1>Pricing that stays on the free tier until revenue says otherwise</h1>
-  <p class="lede">Every product has a free quota. Pro and Team unlock memory, private bins, webhooks, and replay. Billed through Polar (merchant of record). Annual checkout is 10× monthly (2 months free).</p>
+  <h1>Pricing that stays free until revenue says otherwise</h1>
+  <p class="lede">Every product has a free quota. Pro and Team unlock memory, private bins, webhooks, and replay. Billed through Polar. Annual is 10× monthly (2 months free).</p>
 
   <div class="plans">
     <article class="plot-window" data-plan-card="free">
-      <h2>Free</h2>
-      <p class="mono">$0</p>
+      <p class="index-num">Free</p>
+      <h2>$0</h2>
       <ul>
         <li>No account required for first success</li>
         <li>Forms: {LIMITS.free.forms.monthlyQuota}/mo · 1 form</li>
@@ -19,32 +18,31 @@ import { LIMITS, PRICES, PRODUCTS, PRODUCT_COPY } from "@plinth/shared";
         <li>Schema: {LIMITS.free.schema.dailyQuota}/day</li>
       </ul>
     </article>
-    <article class="plot-window" data-plan-card="pro">
-      <h2>Pro</h2>
-      <p class="mono">{PRICES.pro.label}/mo · ${PRICES.pro.annual / 100}/yr</p>
+    <article class="plot-window lift" data-plan-card="pro">
+      <p class="index-num">Pro</p>
+      <h2>{PRICES.pro.label}/mo · ${PRICES.pro.annual / 100}/yr</h2>
       <ul>
         <li>Forms: {LIMITS.pro.forms.monthlyQuota}/mo · webhooks</li>
         <li>Catch: {LIMITS.pro.catch.resources} bins · replay · private</li>
         <li>Schema: {LIMITS.pro.schema.dailyQuota}/day · saved schemas</li>
       </ul>
-      <div class="row product-btns" data-tier="pro">
+      <div class="buy-col">
         {PRODUCTS.map((p) => (
           <button class="mark-btn" type="button" data-product={p} data-plan="pro" id={`btn-${p}-pro`}>
             Buy {PRODUCT_COPY[p].name} Pro
           </button>
         ))}
       </div>
-      <p class="mono tip">Polar checkout lists monthly and annual prices when both are configured on the product.</p>
     </article>
     <article class="plot-window" data-plan-card="team">
-      <h2>Team</h2>
-      <p class="mono">{PRICES.team.label}/mo · ${PRICES.team.annual / 100}/yr</p>
+      <p class="index-num">Team</p>
+      <h2>{PRICES.team.label}/mo · ${PRICES.team.annual / 100}/yr</h2>
       <ul>
         <li>Higher quotas across the board</li>
         <li>90-day Catch retention</li>
         <li>Same Polar checkout, same API keys</li>
       </ul>
-      <div class="row product-btns" data-tier="team">
+      <div class="buy-col">
         {PRODUCTS.map((p) => (
           <button class="mark-btn secondary" type="button" data-product={p} data-plan="team" id={`btn-${p}-team`}>
             Buy {PRODUCT_COPY[p].name} Team
@@ -53,6 +51,47 @@ import { LIMITS, PRICES, PRODUCTS, PRODUCT_COPY } from "@plinth/shared";
       </div>
     </article>
   </div>
+
+  <section class="plot-window" style="margin-top:2rem;overflow-x:auto">
+    <h2>Quota chart</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Free</th>
+          <th>Pro</th>
+          <th>Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Forms / mo</td>
+          <td class="ghost-opt">{LIMITS.free.forms.monthlyQuota}</td>
+          <td>{LIMITS.pro.forms.monthlyQuota}</td>
+          <td>{LIMITS.team.forms.monthlyQuota}</td>
+        </tr>
+        <tr>
+          <td>Catch events</td>
+          <td class="ghost-opt">{LIMITS.free.catch.monthlyQuota}</td>
+          <td>{LIMITS.pro.catch.monthlyQuota}</td>
+          <td>{LIMITS.team.catch.monthlyQuota}</td>
+        </tr>
+        <tr>
+          <td>Schema / day</td>
+          <td class="ghost-opt">{LIMITS.free.schema.dailyQuota}</td>
+          <td>{LIMITS.pro.schema.dailyQuota}</td>
+          <td>{LIMITS.team.schema.dailyQuota}</td>
+        </tr>
+        <tr>
+          <td>Catch retention</td>
+          <td class="ghost-opt">{LIMITS.free.catch.retentionDays}d</td>
+          <td>{LIMITS.pro.catch.retentionDays}d</td>
+          <td>{LIMITS.team.catch.retentionDays}d</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
   <p id="billing-status" class="mono" aria-live="polite" style="margin-top:1rem"></p>
   <p class="prose">Checkout opens on Polar. After payment you land on <a href="/start">/start</a> to claim your API key. Cancel anytime from <a href="/account">Account → Manage billing</a>.</p>
 </Base>
@@ -66,22 +105,23 @@ import { LIMITS, PRICES, PRODUCTS, PRODUCT_COPY } from "@plinth/shared";
   @media (min-width: 960px) {
     .plans {
       grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
     }
   }
   ul {
     padding-left: 1.1rem;
+    color: var(--stone);
   }
-  .tip {
-    font-size: 0.85rem;
-    opacity: 0.8;
+  .buy-col {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
   }
-  .plot-window.highlight {
-    outline: 2px solid var(--magenta);
-    box-shadow: 0 0 0 6px rgba(208, 18, 122, 0.18);
-  }
-  .mark-btn.spotlight {
-    transform: scale(1.03);
-    box-shadow: 0 0 0 3px rgba(208, 18, 122, 0.55);
+  h2 {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
   }
 </style>
 
@@ -92,7 +132,7 @@ import { LIMITS, PRICES, PRODUCTS, PRODUCT_COPY } from "@plinth/shared";
   if (product) {
     document.querySelectorAll(`[data-product="${product}"]`).forEach((btn) => btn.classList.add("spotlight"));
     document.querySelector('[data-plan-card="pro"]')?.classList.add("highlight");
-    status.textContent = `Highlighted: ${product}. Pick Pro or Team below.`;
+    status.textContent = `Highlighted: ${product}. Pick Pro or Team.`;
   }
 
   document.querySelectorAll("[data-product]").forEach((btn) => {

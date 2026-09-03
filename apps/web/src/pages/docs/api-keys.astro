@@ -3,10 +3,11 @@ import Base from "../../layouts/Base.astro";
 ---
 
 <Base title="API keys — Plinth" path="/docs/api-keys">
+  <p class="land-band">API keys</p>
   <h1>API keys</h1>
-  <div class="prose">
+  <article class="plot-window prose">
     <p>Keys look like <code class="inline-code">pln_live_…</code>. Send as <code class="inline-code">x-plinth-key</code> or <code class="inline-code">Authorization: Bearer</code>.</p>
     <p>Anonymous requests are rate-limited by IP. Paid entitlements attach to the user who owns the key via Polar webhooks.</p>
     <p>Claim a key after checkout at <a href="/start">/start</a>.</p>
-  </div>
+  </article>
 </Base>

@@ -3,17 +3,29 @@ import Base from "../../layouts/Base.astro";
 ---
 
 <Base title="Schema docs — Plinth" path="/docs/schema">
+  <p class="land-band">Schema</p>
   <h1>Schema</h1>
-  <div class="prose">
+  <article class="plot-window prose">
     <h2>Repair</h2>
-    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/schema/repair
+    <pre class="mono code-well">{`POST /v1/schema/repair
 { "text": "\`\`\`json\\n{ok: True,}\\n\`\`\`" }`}</pre>
     <h2>Validate</h2>
-    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/schema/validate
+    <pre class="mono code-well">{`POST /v1/schema/validate
 { "value": { "ok": true }, "schema": { "type": "object" } }`}</pre>
     <h2>Repair and validate</h2>
-    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/schema/repair-and-validate
+    <pre class="mono code-well">{`POST /v1/schema/repair-and-validate
 { "text": "{ok: True}", "schema": { "type": "object", "properties": { "ok": { "type": "boolean" } } } }`}</pre>
     <p>Library: <code class="inline-code">npm i @plinth/schema</code></p>
-  </div>
+  </article>
 </Base>
+
+<style>
+  .code-well {
+    background: #0a0b0d;
+    padding: 1rem;
+    overflow-x: auto;
+    box-shadow: inset 0 0 0 1px var(--hair);
+    margin: 1rem 0;
+    color: var(--snow);
+  }
+</style>

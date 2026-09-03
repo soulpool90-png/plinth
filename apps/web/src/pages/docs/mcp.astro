@@ -3,8 +3,9 @@ import Base from "../../layouts/Base.astro";
 ---
 
 <Base title="MCP — Plinth" path="/docs/mcp">
+  <p class="land-band">MCP</p>
   <h1>MCP</h1>
-  <div class="prose">
+  <article class="plot-window prose">
     <p>JSON-RPC tools are exposed at <code class="inline-code">https://api.plinthrun.com/mcp</code>.</p>
     <ul>
       <li><code class="inline-code">schema_repair</code></li>
@@ -12,12 +13,23 @@ import Base from "../../layouts/Base.astro";
       <li><code class="inline-code">catch_create_bin</code></li>
     </ul>
     <p>Example Cursor MCP entry:</p>
-    <pre class="mono" style="background:#063a42;padding:1rem">{`{
+    <pre class="mono code-well">{`{
   "mcpServers": {
     "plinth": {
       "url": "https://api.plinthrun.com/mcp"
     }
   }
 }`}</pre>
-  </div>
+  </article>
 </Base>
+
+<style>
+  .code-well {
+    background: #0a0b0d;
+    padding: 1rem;
+    overflow-x: auto;
+    box-shadow: inset 0 0 0 1px var(--hair);
+    margin: 1rem 0;
+    color: var(--snow);
+  }
+</style>

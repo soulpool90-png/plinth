@@ -3,12 +3,12 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base title="Plinth Catch — webhook inbox" description="Create a URL that records every HTTP request. Inspect headers and body. Replay on Pro." path="/catch">
-  <div class="land-band" style="display:inline-block">Bearing · Catch</div>
-  <h1>Catch every request. Read it like a chart.</h1>
+  <p class="land-band">Catch</p>
+  <h1>Catch every request. Inspect the payload.</h1>
   <p class="lede">Mint a bin URL. Point Stripe, GitHub, Resend, or your own service at it. Inspect the payload. Replay outbound on Pro.</p>
 
   <section class="plot-window stack" style="margin-top:2rem">
-    <div class="land-band">New bin</div>
+    <p class="land-band">New bin</p>
     <div class="row">
       <button class="mark-btn" type="button" id="create">Create catch URL</button>
       <span id="status" class="mono" aria-live="polite"></span>
@@ -19,7 +19,7 @@ import Base from "../layouts/Base.astro";
       <button class="mark-btn secondary" type="button" id="poll">Refresh events</button>
       <button class="mark-btn secondary" type="button" id="ping">Send test ping</button>
     </div>
-    <pre id="events" class="mono" style="white-space:pre-wrap;background:#063a42;color:#f3f7f8;padding:1rem;max-height:420px;overflow:auto"></pre>
+    <pre id="events" class="mono event-log"></pre>
     <aside id="upsell" class="upsell" hidden>
       <p><strong>Free bins are public and rotate after 24 hours.</strong> Pro keeps history 30 days, locks bins private, and can replay events into your local handler.</p>
       <a class="mark-btn" href="/pricing?product=catch">Upgrade Catch Pro — $19/mo</a>
@@ -34,14 +34,15 @@ import Base from "../layouts/Base.astro";
 </Base>
 
 <style>
-  .upsell {
-    margin-top: 0.5rem;
+  .event-log {
+    white-space: pre-wrap;
+    margin: 0;
+    max-height: 420px;
+    overflow: auto;
     padding: 1rem;
-    background: rgba(208, 18, 122, 0.12);
-    border: 1px solid rgba(208, 18, 122, 0.45);
-  }
-  .upsell p {
-    margin-top: 0;
+    background: #0a0b0d;
+    color: var(--snow);
+    box-shadow: inset 0 0 0 1px var(--hair);
   }
 </style>
 

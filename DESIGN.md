@@ -4,49 +4,54 @@
 
 ## World
 
-Marine plotting sheet / chart table. The product is navigational infrastructure for solo builders — you take a fix, plot a bearing, ship.
+Night ridge. Quiet graphite field with an ink mountain hero — infrastructure under the thing you ship, not a neon tool dashboard.
 
-Seed: `63f07665` · grounded index 4 (marine plotting sheet) · mode Persuade.
+Brief-pinned from user references (ink linocut mountains, TURA graphite panels, OUTER mono metadata; red accent dropped). Mode: Persuade on marketing surfaces.
 
 ## Palette
 
 | Token | Hex | Role |
 |-------|-----|------|
-| Sea | `#0a5f6b` | Page ground |
-| Sea deep | `#063a42` | Code wells, depth |
-| Land | `#d9a441` | Ochre bands, links |
-| Magenta | `#d0127a` | Compass ink, CTAs, active bearings |
-| Paper | `#f3f7f8` | Plot windows, body on sea |
-| Ink | `#101418` | Text on paper/land |
+| Ground | `#0e0f11` | Page field |
+| Panel | `#15171a` | Soft-shadow wells |
+| Panel lift | `#1c1f23` | Pro / elevated panels |
+| Stone | `#8a8f96` | Secondary text, outlines |
+| Snow | `#f2f1ec` | Display type, primary CTAs |
+| Mist | `#a9b8c6` | Links, focus, active nav |
+| Danger | `#b5554a` | Errors (muted brick) |
+| Ok | `#7a9a7e` | Success (muted sage) |
 
-Color strategy: Full palette from chart materials. Light paper windows punched into a committed teal sea (daylight nav station, not neon-on-black).
+Color strategy: Restrained monochrome with mist as the single cool accent. No neon, no glow, no mesh grid.
 
 ## Type
 
-- Display / labels: **Geologica**
-- Body: **Atkinson Hyperlegible**
-- Data / code: **Spline Sans Mono**
+- Display: **Albert Sans**
+- Body: **Hanken Grotesk**
+- Data / labels: **Geist Mono**
+
+Display headings are sentence case. Uppercase tracking reserved for mono micro-labels (`.land-band`, `.index-num`, nav).
 
 ## Components
 
-- Magenta compass rose mark (brand + hero)
-- Land bands (uppercase Geologica strips)
-- Plot windows (paper cards for tools/docs)
-- Mark buttons (clipped parallelogram CTAs)
-- Bearings nav (uppercase links with magenta underline)
+- White line-stroke compass mark (brand)
+- Soft-shadow graphite panels (`.plot-window`)
+- Snow filled / stone outline buttons (`.mark-btn`, `.secondary`)
+- Ink mountain hero (`/art/ridge-hero.png`) + SVG ridge divider (`Ridge.astro`)
+- Indexed product list with hairlines (not icon cards)
 
 ## First surface
 
-Landing page: rose + three rhumb lines (Forms / Catch / Schema) beside the pitch; live Schema repair bench as the primary proof in the first scroll.
+Landing: headline in empty sky above the ridge; primary CTA “Repair broken JSON”; SchemaBench panel overlapping the ridge base; product index on solid ground.
 
 ## Motion
 
-One authored settle: rose rotates into place; rhumb lines draw. Disabled under `prefers-reduced-motion`.
+One authored rise: hero copy and mountain fade/translate up (~1.2s). Panel hover lifts shadow. Disabled under `prefers-reduced-motion`.
 
 ## Do not
 
+- Neon orange, glow halos, cathode mesh
 - Cream/paper full-page grounds
-- Inter / Space Grotesk / DM Sans stacks
-- Eyebrow kickers
+- Inter / Space Grotesk / DM Sans as display
+- Eyebrow kickers above headings
 - Icon+heading+text card grids as page structure
 - Fabricated testimonials or MRR

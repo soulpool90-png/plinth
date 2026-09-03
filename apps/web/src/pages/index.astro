@@ -1,59 +1,62 @@
 ---
 import Base from "../layouts/Base.astro";
-import CompassRose from "../components/CompassRose.astro";
 import SchemaBench from "../components/SchemaBench.astro";
+import Ridge from "../components/Ridge.astro";
 ---
 
-<Base title="Plinth — take a bearing, ship the thing" path="/">
+<Base title="Plinth — infrastructure under the thing you ship" path="/">
   <section class="hero">
-    <div class="hero-copy">
-      <div class="land-band" style="display:inline-block;margin-bottom:1rem">Nav station · open-core</div>
-      <h1>Infrastructure under the thing you actually ship</h1>
+    <div class="hero-sky">
+      <h1 class="ridge-rise">Infrastructure under the thing you ship</h1>
       <p class="lede">
-        Three bearings for solo builders: a form endpoint, a webhook inbox you can read, and JSON repair
-        that survives LLM output. Free path works without an account. Paid is memory and limits.
+        A form endpoint, a webhook inbox you can read, and JSON repair that survives LLM output.
+        Free path works without an account. Paid is memory and limits.
       </p>
       <div class="row" style="margin-top:1.5rem">
-        <a class="mark-btn" href="#plot">Plot broken JSON</a>
-        <a class="mark-btn secondary" href="/pricing">See pricing</a>
+        <a class="mark-btn" href="#plot">Repair broken JSON</a>
+        <a class="mark-btn secondary" href="/pricing">Pricing</a>
       </div>
-      <ul class="rhumb" aria-label="Products">
-        <li><a href="/forms"><strong>Forms</strong> — static-site POST URL</a></li>
-        <li><a href="/catch"><strong>Catch</strong> — inspectable webhook bin</a></li>
-        <li><a href="/schema"><strong>Schema</strong> — repair + validate</a></li>
-      </ul>
     </div>
-    <div class="hero-rose" aria-hidden="true">
-      <CompassRose size={320} />
-      <svg class="rhumb-lines" viewBox="0 0 320 320" width="320" height="320">
-        <path class="rhumb-draw" d="M160 160 L60 70" fill="none" stroke="#d9a441" stroke-width="2"></path>
-        <path class="rhumb-draw" d="M160 160 L270 90" fill="none" stroke="#d9a441" stroke-width="2"></path>
-        <path class="rhumb-draw" d="M160 160 L210 260" fill="none" stroke="#d9a441" stroke-width="2"></path>
-        <text x="40" y="58" fill="#f3f7f8" font-size="12" font-family="Geologica,sans-serif">FORMS</text>
-        <text x="250" y="78" fill="#f3f7f8" font-size="12" font-family="Geologica,sans-serif">CATCH</text>
-        <text x="190" y="280" fill="#f3f7f8" font-size="12" font-family="Geologica,sans-serif">SCHEMA</text>
-      </svg>
+    <div class="hero-art" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 760px)" srcset="/art/ridge-mobile.png" />
+        <img class="ridge-img ridge-rise" src="/art/ridge-hero.png" alt="" width="1600" height="900" />
+      </picture>
+      <div class="mist-fade"></div>
     </div>
   </section>
 
-  <section id="plot" style="margin-top:3rem">
+  <section id="plot" class="bench-slot">
     <SchemaBench />
   </section>
 
+  <Ridge />
+
+  <section class="stack" style="margin-top:1.5rem">
+    <ol class="product-index" aria-label="Products">
+      <li><a href="/forms"><span class="index-num">01</span> <strong>Forms</strong> — static-site POST URL</a></li>
+      <li><a href="/catch"><span class="index-num">02</span> <strong>Catch</strong> — inspectable webhook bin</a></li>
+      <li><a href="/schema"><span class="index-num">03</span> <strong>Schema</strong> — repair + validate</a></li>
+    </ol>
+  </section>
+
   <section style="margin-top:3rem" class="stack">
-    <h2>Three tools. One chart table.</h2>
+    <h2>Three tools. One foundation.</h2>
     <div class="tri">
       <article class="plot-window">
+        <p class="index-num">01</p>
         <h3>Forms</h3>
         <p>Point any HTML form at a Plinth URL. Honeypot + heuristics. Store or forward. Open-source screener in <code class="inline-code">@plinth/forms</code>.</p>
         <a href="/forms">Open Forms →</a>
       </article>
       <article class="plot-window">
+        <p class="index-num">02</p>
         <h3>Catch</h3>
         <p>Create a bin. Fire Stripe, GitHub, or your own webhook at it. Inspect headers and body. Replay on Pro.</p>
         <a href="/catch">Open Catch →</a>
       </article>
       <article class="plot-window">
+        <p class="index-num">03</p>
         <h3>Schema</h3>
         <p>Repair trailing commas, fences, Python literals, truncated braces — then validate against JSON Schema.</p>
         <a href="/schema">Open Schema →</a>
@@ -62,69 +65,95 @@ import SchemaBench from "../components/SchemaBench.astro";
   </section>
 
   <section style="margin-top:3rem" class="plot-window">
-    <div class="land-band">Dead reckoning · pricing</div>
     <p>
       Free quotas on every product. Pro is <strong>$19/mo</strong>. Team is <strong>$49/mo</strong>. Polar handles
       tax and receipts. Annual = 10 months.
     </p>
-    <a class="mark-btn" href="/pricing">Full chart</a>
+    <a class="mark-btn" href="/pricing">Full pricing</a>
   </section>
 </Base>
 
 <style>
   .hero {
-    display: grid;
-    gap: 2rem;
-    align-items: center;
-    padding-top: 1.5rem;
-  }
-  @media (min-width: 960px) {
-    .hero {
-      grid-template-columns: 1.1fr 0.9fr;
-    }
-  }
-  .hero-rose {
     position: relative;
+    min-height: min(58vh, 560px);
     display: grid;
-    place-items: center;
-    min-height: 320px;
+    align-content: start;
+    padding-top: 1.25rem;
+    padding-bottom: 7rem;
+    overflow: hidden;
   }
-  .rhumb-lines {
+  .hero-sky {
+    position: relative;
+    z-index: 2;
+    max-width: 36rem;
+  }
+  .hero-art {
     position: absolute;
-    inset: 0;
-    margin: auto;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: min(1100px, 100vw);
+    z-index: 1;
     pointer-events: none;
   }
-  .rhumb-draw {
-    stroke-dasharray: 220;
-    stroke-dashoffset: 220;
-    animation: draw 1.1s 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  .ridge-img {
+    width: 100%;
+    height: auto;
+    opacity: 0.85;
   }
-  @keyframes draw {
+  .mist-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--ground) 0%, transparent 35%, transparent 55%, var(--ground) 100%);
+  }
+  .bench-slot {
+    position: relative;
+    z-index: 3;
+    margin-top: -2.5rem;
+  }
+  .ridge-rise {
+    animation: rise 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
     to {
-      stroke-dashoffset: 0;
+      opacity: 1;
+      transform: translateY(0);
     }
   }
-  .rhumb {
+  .product-index {
     list-style: none;
     padding: 0;
-    margin: 1.75rem 0 0;
+    margin: 0;
     display: grid;
-    gap: 0.55rem;
+    gap: 0;
+    background: var(--ground);
   }
-  .rhumb a {
-    color: var(--paper);
+  .product-index li {
+    border-top: 1px solid var(--hair);
+  }
+  .product-index li:last-child {
+    border-bottom: 1px solid var(--hair);
+  }
+  .product-index a {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.95rem 0;
+    color: var(--snow);
     text-decoration: none;
     font-family: var(--font-display);
-    letter-spacing: 0.03em;
-    padding-left: 0;
   }
-  .rhumb a::before {
-    content: "▸ ";
-    color: var(--magenta);
+  .product-index a:hover {
+    color: var(--mist);
   }
-  .rhumb a:hover {
-    color: var(--land);
+  .product-index strong {
+    color: var(--snow);
+    font-weight: 600;
   }
   .tri {
     display: grid;

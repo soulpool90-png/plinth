@@ -3,18 +3,30 @@ import Base from "../../layouts/Base.astro";
 ---
 
 <Base title="Forms docs — Plinth" path="/docs/forms">
+  <p class="land-band">Forms</p>
   <h1>Forms</h1>
-  <div class="prose">
+  <article class="plot-window prose">
     <h2>Create</h2>
-    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/forms
+    <pre class="mono code-well">{`POST /v1/forms
 Header: x-plinth-key: pln_live_...
 { "name": "Contact", "notify_email": "you@example.com", "webhook_url": "https://..." }`}</pre>
     <h2>Anonymous</h2>
-    <pre class="mono" style="background:#063a42;padding:1rem">{`POST /v1/forms/anonymous`}</pre>
+    <pre class="mono code-well">{`POST /v1/forms/anonymous`}</pre>
     <h2>Submit</h2>
     <p>POST to <code class="inline-code">/v1/forms/:id</code> as <code class="inline-code">application/x-www-form-urlencoded</code> or JSON. Include a honeypot field named <code class="inline-code">_gotcha</code> (or your configured name) that humans leave empty.</p>
     <h2>List submissions</h2>
-    <pre class="mono" style="background:#063a42;padding:1rem">{`GET /v1/forms/:id
+    <pre class="mono code-well">{`GET /v1/forms/:id
 Header: x-plinth-key: pln_live_...`}</pre>
-  </div>
+  </article>
 </Base>
+
+<style>
+  .code-well {
+    background: #0a0b0d;
+    padding: 1rem;
+    overflow-x: auto;
+    box-shadow: inset 0 0 0 1px var(--hair);
+    margin: 1rem 0;
+    color: var(--snow);
+  }
+</style>

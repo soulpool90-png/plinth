@@ -14,14 +14,14 @@ const byCategory = categories.map((cat) => ({
   description="Practical guides for static site forms, webhook testing, and LLM JSON repair on Plinth."
   path="/guides"
 >
-  <div class="land-band" style="display:inline-block">Chart notes · Guides</div>
+  <p class="land-band">Guides</p>
   <h1>Guides</h1>
   <p class="lede">
-    Plot sheets for solo builders — contact forms without a server, webhook capture and replay, and JSON repair for agent pipelines.
+    Long-form notes for solo builders — contact forms without a server, webhook capture and replay, and JSON repair for agent pipelines.
   </p>
 
   {byCategory.map(({ name, guides }) => (
-    <section class="prose" style="margin-top:2rem">
+    <section class="plot-window prose guide-section">
       <h2>{name}</h2>
       <ul class="guide-index">
         {guides.map((g) => (
@@ -34,29 +34,59 @@ const byCategory = categories.map((cat) => ({
     </section>
   ))}
 
-  <section class="prose" style="margin-top:2.5rem">
-    <p>
-      <a href="/docs">All docs</a> · <a href="/forms">Forms</a> · <a href="/catch">Catch</a> · <a href="/schema">Schema</a> · <a href="/pricing">Pricing</a>
-    </p>
-  </section>
+  <nav class="read-footer">
+    <a href="/docs">All docs</a>
+    <span aria-hidden="true">·</span>
+    <a href="/forms">Forms</a>
+    <span aria-hidden="true">·</span>
+    <a href="/catch">Catch</a>
+    <span aria-hidden="true">·</span>
+    <a href="/schema">Schema</a>
+    <span aria-hidden="true">·</span>
+    <a href="/pricing">Pricing</a>
+  </nav>
 </Base>
 
 <style>
+  .guide-section {
+    margin-top: 2rem;
+  }
+
   .guide-index {
     list-style: none;
     padding: 0;
+    margin: 0;
   }
+
   .guide-index li {
     margin-bottom: 1.25rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(10, 95, 107, 0.2);
+    border-bottom: 1px solid var(--hair);
   }
+
   .guide-index li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
     border-bottom: none;
   }
+
   .guide-index p {
     margin: 0.35rem 0 0;
-    color: rgba(243, 247, 248, 0.75);
+    color: var(--stone);
     font-size: 0.95rem;
+  }
+
+  .read-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    align-items: center;
+    margin-top: 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .read-footer span {
+    color: var(--stone);
+    opacity: 0.5;
   }
 </style>

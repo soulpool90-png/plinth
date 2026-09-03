@@ -3,8 +3,9 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base title="Plinth account" description="View entitlements and open the Polar customer portal." path="/account">
-  <div class="land-band" style="display:inline-block">Logbook</div>
+  <p class="land-band">Account</p>
   <h1>Account</h1>
+  <p class="lede">Load entitlements with your API key, or open the Polar customer portal to manage billing.</p>
   <section class="plot-window stack" style="margin-top:2rem">
     <label>API key <input id="key" type="password" autocomplete="off" /></label>
     <div class="row">
@@ -12,9 +13,20 @@ import Base from "../layouts/Base.astro";
       <button class="mark-btn secondary" type="button" id="portal">Manage billing (Polar)</button>
     </div>
     <p id="status" class="mono" aria-live="polite"></p>
-    <pre id="out" class="mono" style="white-space:pre-wrap;background:#063a42;color:#f3f7f8;padding:1rem"></pre>
+    <pre id="out" class="mono out-log"></pre>
   </section>
 </Base>
+
+<style>
+  .out-log {
+    white-space: pre-wrap;
+    margin: 0;
+    padding: 1rem;
+    background: #0a0b0d;
+    color: var(--snow);
+    box-shadow: inset 0 0 0 1px var(--hair);
+  }
+</style>
 
 <script>
   const api = window.PLINTH_API;

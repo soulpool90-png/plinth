@@ -15,10 +15,10 @@ const schema = `{
 ---
 
 <section class="plot-window stack" aria-labelledby="repair-title">
-  <div class="land-band" id="repair-title">Plotting sheet · Schema repair</div>
+  <p class="land-band" id="repair-title">Schema repair</p>
   <p>
     Paste broken JSON (LLM prose, trailing commas, Python literals). Repair runs in your browser via
-    <code class="inline-code">@plinth/schema</code>. No account. Use the API when you need quotas, saved schemas, or MCP.
+    <code class="inline-code">@plinth/schema</code>. No account. Use the API for quotas, saved schemas, or MCP.
   </p>
   <div class="bench">
     <label>
@@ -31,7 +31,7 @@ const schema = `{
     </label>
   </div>
   <div class="row">
-    <button class="mark-btn" type="button" id="run">Take a fix</button>
+    <button class="mark-btn" type="button" id="run">Repair in browser</button>
     <button class="mark-btn secondary" type="button" id="run-api">Repair via API</button>
     <span id="status" class="mono" aria-live="polite"></span>
   </div>
@@ -55,16 +55,6 @@ const schema = `{
     .bench {
       grid-template-columns: 1fr 1fr;
     }
-  }
-  .upsell {
-    margin-top: 0.5rem;
-    padding: 1rem;
-    background: rgba(208, 18, 122, 0.12);
-    border: 1px solid rgba(208, 18, 122, 0.45);
-  }
-  .upsell p {
-    margin-top: 0;
-    color: var(--ink);
   }
 </style>
 

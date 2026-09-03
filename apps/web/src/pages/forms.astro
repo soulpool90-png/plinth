@@ -3,12 +3,12 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base title="Plinth Forms — static site form backend" description="A POST URL for any static site. Honeypot spam screens, storage, optional webhooks. Open-source screener." path="/forms">
-  <div class="land-band" style="display:inline-block">Bearing · Forms</div>
+  <p class="land-band">Forms</p>
   <h1>A form backend that fits on a static site</h1>
   <p class="lede">Point <code class="inline-code">action</code> at a Plinth URL. We screen spam, store the payload, and optionally forward it. No server required on your side.</p>
 
   <section class="plot-window stack" style="margin-top:2rem">
-    <div class="land-band">Create a form endpoint</div>
+    <p class="land-band">Create endpoint</p>
     <div class="row">
       <button class="mark-btn" type="button" id="create">Mint anonymous form</button>
       <span id="status" class="mono" aria-live="polite"></span>
@@ -39,18 +39,6 @@ import Base from "../layouts/Base.astro";
     <p><a href="/docs/forms">Forms docs</a> · <a href="/compare/formspree">vs Formspree</a> · <a href="/pricing?product=forms">Pricing</a></p>
   </section>
 </Base>
-
-<style>
-  .upsell {
-    margin-top: 0.5rem;
-    padding: 1rem;
-    background: rgba(208, 18, 122, 0.12);
-    border: 1px solid rgba(208, 18, 122, 0.45);
-  }
-  .upsell p {
-    margin-top: 0;
-  }
-</style>
 
 <script>
   const api = window.PLINTH_API;

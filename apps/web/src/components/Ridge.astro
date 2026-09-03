@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  class={`ridge ${className}`}
+  viewBox="0 0 1200 80"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path
+    fill="currentColor"
+    d="M0 80 L0 52 L48 48 L96 58 L160 28 L220 44 L280 18 L340 40 L400 12 L470 36 L540 8 L610 32 L680 16 L740 38 L820 6 L900 34 L980 20 L1060 42 L1120 24 L1200 48 L1200 80 Z"
+  ></path>
+</svg>
+
+<style>
+  .ridge {
+    display: block;
+    width: 100%;
+    height: 2.5rem;
+    color: var(--snow);
+    opacity: 0.12;
+  }
+</style>

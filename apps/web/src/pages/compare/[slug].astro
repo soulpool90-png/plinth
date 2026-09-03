@@ -50,11 +50,30 @@ const page = pages[slug];
 ---
 
 <Base title={page.title} description={`${page.rival} alternative for solo builders.`} path={`/compare/${slug}`}>
-  <div class="land-band" style="display:inline-block">Comparison</div>
+  <p class="land-band">Compare</p>
   <h1>{page.rival} alternative</h1>
-  <div class="prose">
+  <article class="plot-window prose">
     <p>{page.body}</p>
     <p>Verify current competitor pricing before spending. No fabricated customer quotes.</p>
-    <p><a href="/pricing">Plinth pricing</a> · <a href="/">Home</a></p>
-  </div>
+    <nav class="read-footer">
+      <a href="/pricing">Plinth pricing</a>
+      <span aria-hidden="true">·</span>
+      <a href="/">Home</a>
+    </nav>
+  </article>
 </Base>
+
+<style>
+  .read-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+
+  .read-footer span {
+    color: var(--stone);
+    opacity: 0.5;
+  }
+</style>
