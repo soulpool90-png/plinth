@@ -1,5 +1,21 @@
 # Ops log
 
+## 2026-09-07 — weekly strategist
+
+Scores (paying / traffic / support): Forms unknown/unknown/unknown; Catch unknown/unknown/unknown; Schema unknown/unknown/unknown — no Polar token or CF analytics in agent env; support `GET /v1/support/open` → 403. Milestone Month 3 (first payer) not due; no >50% miss.
+
+Experiments (≤3): (1) Forms/Catch free-path onboarding copy to first success; (2) pricing free→Pro one-line contrast above buy buttons; (3) Schema post-repair claim-key nudge.
+
+Email: not sent — `REPORT_EMAIL` unset in Cloud Agent secrets; no mail action configured. Report below + this PR is the delivery.
+
+```
+MRR / paying: unknown — needs Polar
+Product leader: Schema (shortlist + hero; $0 payers → no double-down)
+Shipped last week: Go-live plinthrun.com; night ridge redesign; Polar checkouts/portal; 24 guides; public repo
+Ships this week: Forms/Catch free-path onboarding copy; pricing free→Pro contrast; Schema claim-key nudge
+Human: (1) set REPORT_EMAIL+POLAR_ACCESS_TOKEN on Weekly Strategist ≤5m (2) Polar PLINTHTEST checkout proof ≤5m (`ops/checkout-proof.md`)
+```
+
 ## 2026-09-03 — night ridge redesign
 
 - Replaced cathode-orange world with brief-pinned night ridge (graphite/snow/stone/mist, ink mountain hero).
