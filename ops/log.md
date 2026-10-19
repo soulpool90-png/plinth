@@ -1,5 +1,21 @@
 # Ops log
 
+## 2026-10-19 — weekly strategist
+
+```
+MRR / paying: unknown — needs Polar
+Product leader: Schema (shortlist + hero; $0 known payers → no double-down)
+Shipped last week: nothing on main (Sep 7–Oct 12 strategist PRs #1–#6 still draft; night ridge remains latest ship)
+Ships this week: Forms free-path mint clarity; pricing free→Pro contrast; Schema claim-key nudge
+Human: (1) set REPORT_EMAIL+POLAR_ACCESS_TOKEN on Weekly Strategist ≤5m (2) Polar PLINTHTEST checkout proof ≤5m (`ops/checkout-proof.md`)
+```
+
+- Email: not sent — `REPORT_EMAIL` unset; no mail action on this automation (PR is delivery).
+- Paying / traffic / support: unknown (no Polar, no CF analytics; support open → 403).
+- Live probes: Catch free OK; Forms create needs API key; Schema repair → 429 with upgrade_url.
+- Month 3 first-payer (go-live 2026-09-03) not due; no >50% miss → no strategy reset.
+- Experiments (≤3): Forms mint-URL free-path; pricing free→Pro contrast; Schema claim-key nudge.
+
 ## 2026-09-03 — night ridge redesign
 
 - Replaced cathode-orange world with brief-pinned night ridge (graphite/snow/stone/mist, ink mountain hero).
